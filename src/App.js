@@ -1,23 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { Switch, Route } from "react-router-dom";
+
+import s from "./App.module.sass";
+import Header from "./components/Header/Header";
+import Auth from "./containers/Auth/Auth";
+
+const routes = (
+  <Switch>
+    <Route path="/login" component={Auth} />
+  </Switch>
+);
 
 function App() {
+  const [theme, setTheme] = useState("light");
+  console.log(setTheme);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={`${s.app} ${theme}`}>
+      <Header />
+      {routes}
     </div>
   );
 }
