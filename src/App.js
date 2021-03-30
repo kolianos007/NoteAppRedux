@@ -3,11 +3,13 @@ import { Switch, Route } from "react-router-dom";
 
 import s from "./App.module.sass";
 import Header from "./components/Header/Header";
-import Auth from "./containers/Auth/Auth";
+import Login from "./containers/Auth/Login/Login";
+import Registration from "./containers/Auth/Registration/Registration";
 
 const routes = (
   <Switch>
-    <Route path="/login" component={Auth} />
+    <Route path="/registration" component={Registration} />
+    <Route path="/login" component={Login} />
   </Switch>
 );
 
