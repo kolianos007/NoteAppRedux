@@ -15,7 +15,11 @@ const Registration = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
 
-  const onSubmitHandler = () => {};
+  const onSubmitHandler = () => {
+    email.isEmpty || password.isEmpty || name.isEmpty
+      ? console.log(1)
+      : console.log(2);
+  };
 
   const onClickHandler = (e) => {
     e.preventDefault();
