@@ -9,11 +9,14 @@ const Login = () => {
   const email = useInput("", { isEmpty: true, isEmail: true });
   const password = useInput("", { isEmpty: true, isPass: true });
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isErrorSubmit, setErrorSubmit] = useState(false);
 
-  const onSubmitHandler = () => {};
-
-  const onClickHandler = (e) => {
+  const onSubmitHandler = (e) => {
     e.preventDefault();
+  };
+
+  const onClickHandler = () => {
+    !email.isValid || !password.isValid ? setErrorSubmit(true) : null;
   };
 
   const visiblePass = () => {
@@ -31,7 +34,8 @@ const Login = () => {
             <Input
               className="inputWrapper inputWrapper__authForm"
               inputClass={
-                email.isDirty && (email.isEmpty || email.emailError)
+                (isErrorSubmit && !email.isValid) ||
+                (email.isDirty && (email.isEmpty || email.emailError))
                   ? "input error"
                   : "input"
               }
@@ -42,7 +46,8 @@ const Login = () => {
               value={email.value}
               onBlur={email.onBlur}
               errorMess={
-                email.isDirty && (email.isEmpty || email.emailError)
+                (isErrorSubmit && !email.isValid) ||
+                (email.isDirty && (email.isEmpty || email.emailError))
                   ? email.isEmpty || email.emailError
                   : ""
               }
@@ -50,7 +55,8 @@ const Login = () => {
             <Input
               className="inputWrapper inputWrapper__authForm"
               inputClass={
-                password.isDirty && (password.isEmpty || password.passError)
+                (isErrorSubmit && !password.isValid) ||
+                (password.isDirty && (password.isEmpty || password.passError))
                   ? "input error"
                   : "input"
               }
@@ -63,7 +69,8 @@ const Login = () => {
               icon={isPasswordVisible ? "far fa-eye" : "fas fa-eye-slash"}
               onClickIcon={visiblePass}
               errorMess={
-                password.isDirty && (password.isEmpty || password.passError)
+                (isErrorSubmit && !password.isValid) ||
+                (password.isDirty && (password.isEmpty || password.passError))
                   ? password.isEmpty || password.passError
                   : ""
               }

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import Button from "../../../components/UI/Button/Button";
 import Input from "../../../components/UI/Input/Input";
 import useInput from "../../../hooks/useInput";
@@ -8,21 +9,38 @@ import s from "./Registration.module.sass";
 const Registration = () => {
   const email = useInput("", { isEmpty: true, isEmail: true });
   const password = useInput("", { isEmpty: true, isPass: true });
-  const name = useInput("", { isEmpty: true, minLength: 8 });
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isErrorSubmit, setErrorSubmit] = useState(false);
 
   const visiblePass = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
 
-  const onSubmitHandler = () => {
-    email.isEmpty || password.isEmpty || name.isEmpty
-      ? console.log(1)
-      : console.log(2);
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
   };
 
-  const onClickHandler = (e) => {
-    e.preventDefault();
+  const registrationUser = async () => {
+    const authData = {
+      email: email.value,
+      password: password.value,
+      returnSecureToken: true,
+    };
+    try {
+      const response = await axios.post(
+        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCiEqKYajHZOShxkFxvEJYXoEy-hdv2fNc",
+        authData
+      );
+      console.log(response);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const onClickHandler = () => {
+    !email.isValid || !password.isValid
+      ? setErrorSubmit(true)
+      : registrationUser();
   };
   return (
     <div className={s.auth}>
@@ -36,26 +54,8 @@ const Registration = () => {
             <Input
               className="inputWrapper inputWrapper__authForm"
               inputClass={
-                name.isDirty && (name.isEmpty || name.minLengthError)
-                  ? "input error"
-                  : "input"
-              }
-              type="text"
-              name="name"
-              placeholder="Ваше имя"
-              onChange={name.onChange}
-              value={name.value}
-              onBlur={name.onBlur}
-              errorMess={
-                name.isDirty && (name.isEmpty || name.minLengthError)
-                  ? name.isEmpty || name.minLengthError
-                  : ""
-              }
-            />
-            <Input
-              className="inputWrapper inputWrapper__authForm"
-              inputClass={
-                email.isDirty && (email.isEmpty || email.emailError)
+                (isErrorSubmit && !email.isValid) ||
+                (email.isDirty && (email.isEmpty || email.emailError))
                   ? "input error"
                   : "input"
               }
@@ -66,7 +66,8 @@ const Registration = () => {
               value={email.value}
               onBlur={email.onBlur}
               errorMess={
-                email.isDirty && (email.isEmpty || email.emailError)
+                (isErrorSubmit && !email.isValid) ||
+                (email.isDirty && (email.isEmpty || email.emailError))
                   ? email.isEmpty || email.emailError
                   : ""
               }
@@ -74,7 +75,8 @@ const Registration = () => {
             <Input
               className="inputWrapper inputWrapper__authForm"
               inputClass={
-                password.isDirty && (password.isEmpty || password.passError)
+                (isErrorSubmit && !password.isValid) ||
+                (password.isDirty && (password.isEmpty || password.passError))
                   ? "input error"
                   : "input"
               }
@@ -87,7 +89,8 @@ const Registration = () => {
               icon={isPasswordVisible ? "far fa-eye" : "fas fa-eye-slash"}
               onClickIcon={visiblePass}
               errorMess={
-                password.isDirty && (password.isEmpty || password.passError)
+                (isErrorSubmit && !password.isValid) ||
+                (password.isDirty && (password.isEmpty || password.passError))
                   ? password.isEmpty || password.passError
                   : ""
               }

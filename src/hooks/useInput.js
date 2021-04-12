@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 
 const useValidation = (value, validations) => {
-  const [isEmpty, setEmpty] = useState(true);
+  const [isEmpty, setEmpty] = useState(false);
   const [minLengthError, setMinLengthError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passError, setPassError] = useState(false);
+  const [isValid, setValid] = useState(false);
 
   useEffect(() => {
     // eslint-disable-next-line no-restricted-syntax
@@ -31,7 +32,7 @@ const useValidation = (value, validations) => {
             break;
           }
           case "isPass": {
-            const rePass = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/;
+            const rePass = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
             rePass.test(value)
               ? setPassError(false)
               : setPassError("Введите корректный пароль");
@@ -45,11 +46,20 @@ const useValidation = (value, validations) => {
     }
   }, [value]);
 
+  useEffect(() => {
+    if (isEmpty || minLengthError || passError || emailError) {
+      setValid(false);
+    } else {
+      setValid(true);
+    }
+  }, [isEmpty, minLengthError, passError, emailError]);
+
   return {
     isEmpty,
     minLengthError,
     emailError,
     passError,
+    isValid,
   };
 };
 
