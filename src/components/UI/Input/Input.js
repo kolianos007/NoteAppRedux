@@ -46,7 +46,7 @@ Input.propTypes = {
   onBlur: PropTypes.func,
   icon: PropTypes.string,
   onClickIcon: PropTypes.func,
-  errorMess: PropTypes.string,
+  errorMess: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 };
 
 Input.defaultProps = {

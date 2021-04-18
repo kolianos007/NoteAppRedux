@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../../../components/UI/Button/Button";
@@ -15,8 +16,26 @@ const Login = () => {
     e.preventDefault();
   };
 
+  const loginUser = async () => {
+    const authData = {
+      email: email.value,
+      password: password.value,
+      returnSecureToken: true,
+    };
+
+    try {
+      const response = axios.post(
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCiEqKYajHZOShxkFxvEJYXoEy-hdv2fNc",
+        authData
+      );
+      console.log(response);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const onClickHandler = () => {
-    !email.isValid || !password.isValid ? setErrorSubmit(true) : null;
+    !email.isValid || !password.isValid ? setErrorSubmit(true) : loginUser();
   };
 
   const visiblePass = () => {

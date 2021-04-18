@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Switch, Route } from "react-router-dom";
 
 import s from "./App.module.sass";
+import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import Login from "./containers/Auth/Login/Login";
 import Registration from "./containers/Auth/Registration/Registration";
@@ -21,6 +22,7 @@ function App() {
     <div className={`${s.app} ${theme}`}>
       <Header />
       {routes}
+      <Footer />
     </div>
   );
 }
