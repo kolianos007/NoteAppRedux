@@ -103,7 +103,7 @@ const Login = () => {
           </form>
           <div className={s.redirect}>
             <span>Ещё нет аккаунта? </span>
-            <Link to="/refistration">Зарегистрироваться</Link>
+            <Link to="/registration">Зарегистрироваться</Link>
           </div>
         </div>
       </div>

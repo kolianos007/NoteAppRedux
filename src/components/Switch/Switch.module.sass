@@ -1,0 +1,42 @@
+.switcher
+  width: 50px
+  height: 22px
+  border-radius: 100px
+  background: var(--theme-switcher-color)
+  display: flex
+  align-items: center
+  cursor: pointer
+  transition: .3s
+  // position: relative
+  overflow: hidden
+  position: absolute
+  right: 15px
+  &_input
+    display: none
+    &:checked
+      & + .switcher_icon
+        transform: translateX(1.7rem)
+        background: url("../../images/moon.svg") no-repeat center, var(--theme-header-color)
+      & + .switcher_icon::after
+        transform: translateX(.1rem)
+  &_icon
+    border-radius: 50%
+    width: 20px
+    height: 20px
+    background: url("../../images/sun.svg") no-repeat center, var(--theme-header-color)
+    display: flex
+    justify-content: center
+    align-items: center
+    transition: all 0.4s cubic-bezier(0.33, 1.6, 0.66, 1)
+    position: absolute
+    left: .09rem
+    top: .0625rem
+    &::after
+      content: 'ON'
+      font-size: .75rem
+      font-weight: 400
+      color: var(--title-color)
+      position: absolute
+      left: -1.5rem
+
+    
