@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Button from "../../../components/UI/Button/Button";
-import Input from "../../../components/UI/Input/Input";
+import Button from "../../../components/UI/Button";
+import Input from "../../../components/UI/Input";
 import useInput from "../../../hooks/useInput";
 import s from "./Login.module.sass";
 

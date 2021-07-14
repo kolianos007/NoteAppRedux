@@ -1,5 +1,5 @@
 import React from "react";
-import Switch from "../Switch/Switch";
+import Switch from "../Switch";
 
 import s from "./Header.module.sass";
 

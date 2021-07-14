@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import { Switch, Route } from "react-router-dom";
 
 import s from "./App.module.sass";
@@ -15,11 +16,13 @@ const routes = (
 );
 
 function App() {
-  const [theme, setTheme] = useState("light");
-  console.log(setTheme);
+  const color = useSelector(({ themeColor }) => {
+    const { themeStyle } = themeColor;
+    return themeStyle;
+  });
 
   return (
-    <div className={`${s.app} ${theme}`}>
+    <div className={`${s.app} ${color}`}>
       <Header />
       {routes}
       <Footer />
