@@ -4,25 +4,33 @@ import changeTheme from "../../redux/actions/theme";
 import s from "./Switch.module.sass";
 
 const Switch = () => {
+  const dispatch = useDispatch();
+  const localStorageColor = localStorage.getItem("themeStyle");
+
+  if (localStorageColor) {
+    dispatch(changeTheme(localStorageColor));
+  }
+
+  const selectTheme = (localStorageColorAttr) => {
+    if (localStorageColorAttr !== "light") {
+      dispatch(changeTheme("light"));
+    } else {
+      dispatch(changeTheme("dark"));
+    }
+  };
   const color = useSelector(({ themeColor }) => {
     const { themeStyle } = themeColor;
     return themeStyle;
   });
-  const dispatch = useDispatch();
-  const newColor = color === "light" ? "dark" : "light";
-  console.log(newColor);
-
-  const switchTheme = (newColorAttr) => {
-    dispatch(changeTheme(newColorAttr));
-  };
 
   return (
     <label htmlFor="theme" className={s.switcher}>
       <input
         type="checkbox"
         id="theme"
-        onClick={() => switchTheme(newColor)}
+        onChange={() => selectTheme(color)}
         className={s.switcher_input}
+        defaultChecked={localStorageColor === "dark"}
       />
       <span className={s.switcher_icon} />
     </label>

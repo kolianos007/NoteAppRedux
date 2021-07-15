@@ -1,7 +1,9 @@
 import CHANGE_THEME from "../actions/actionCreators";
 
 const initialState = {
-  themeStyle: "light",
+  themeStyle: "",
+  themeLight: "light",
+  themeDark: "dark",
 };
 
 const themeReducer = (state = initialState, action) => {
