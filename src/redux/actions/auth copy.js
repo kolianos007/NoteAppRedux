@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AUTH_LOGOUT, AUTH_SUCCESS } from "./actionCreators";
+// import { AUTH_LOGOUT, AUTH_SUCCESS } from "./actionCreators";
 
 export const logout = () => {
   localStorage.removeItem("token");

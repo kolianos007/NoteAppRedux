@@ -24,11 +24,12 @@ const Login = () => {
     };
 
     try {
-      const response = axios.post(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCiEqKYajHZOShxkFxvEJYXoEy-hdv2fNc",
-        authData
-      );
-      console.log(response);
+      axios
+        .post(
+          "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCiEqKYajHZOShxkFxvEJYXoEy-hdv2fNc",
+          authData
+        )
+        .then((response) => console.log(response.data));
     } catch (e) {
       console.log(e);
     }
