@@ -60,7 +60,7 @@ const auth = (email, password, isLogin) => {
         "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCiEqKYajHZOShxkFxvEJYXoEy-hdv2fNc";
     }
 
-    const response = axios.post(url, authData);
+    const response = await axios.post(url, authData);
     const {
       data: { idToken, localId, expiresIn },
     } = response;
@@ -69,7 +69,7 @@ const auth = (email, password, isLogin) => {
 
     localStorage.setItem("idToken", idToken);
     localStorage.setItem("localId", localId);
-    localStorage.setItem("idToken", expiresData);
+    localStorage.setItem("expiresIn", expiresData);
 
     dispatch(authSuccess(idToken));
     dispatch(autoLogout(expiresData));
