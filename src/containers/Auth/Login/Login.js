@@ -1,12 +1,15 @@
-import axios from "axios";
+/* eslint-disable no-shadow */
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 import Button from "../../../components/UI/Button";
 import Input from "../../../components/UI/Input";
 import useInput from "../../../hooks/useInput";
+import { auth } from "../../../redux/actions/auth";
 import s from "./Login.module.sass";
 
-const Login = () => {
+// eslint-disable-next-line react/prop-types
+const Login = ({ auth }) => {
   const email = useInput("", { isEmpty: true, isEmail: true });
   const password = useInput("", { isEmpty: true, isPass: true });
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -16,23 +19,8 @@ const Login = () => {
     e.preventDefault();
   };
 
-  const loginUser = async () => {
-    const authData = {
-      email: email.value,
-      password: password.value,
-      returnSecureToken: true,
-    };
-
-    try {
-      axios
-        .post(
-          "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCiEqKYajHZOShxkFxvEJYXoEy-hdv2fNc",
-          authData
-        )
-        .then((response) => console.log(response.data));
-    } catch (e) {
-      console.log(e);
-    }
+  const loginUser = () => {
+    auth(email.value, password.value, true);
   };
 
   const onClickHandler = () => {
@@ -112,4 +100,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default connect(null, { auth })(Login);

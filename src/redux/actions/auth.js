@@ -1,4 +1,48 @@
 import axios from "axios";
+import { AUTH_SUCCESS, AUTH_LOGOUT } from "./actionTypes";
+
+const authSuccess = (idToken) => {
+  return {
+    type: AUTH_SUCCESS,
+    idToken,
+  };
+};
+
+const logout = () => {
+  localStorage.removeItem("idToken");
+  localStorage.removeItem("localId");
+  localStorage.removeItem("experiseData");
+  return {
+    type: AUTH_LOGOUT,
+  };
+};
+
+const autoLogout = (time) => {
+  return (dispatch) => {
+    setTimeout(() => {
+      dispatch(logout());
+    }, time);
+  };
+};
+
+const autoLogin = () => {
+  return (dispatch) => {
+    const token = localStorage.getItem("idToken");
+    if (!token) {
+      dispatch(logout());
+    } else {
+      const expiresData = new Date(localStorage.getItem("expiresData"));
+      if (expiresData <= new Date()) {
+        dispatch(logout());
+      } else {
+        dispatch(authSuccess(token));
+        dispatch(
+          autoLogout(expiresData.getTime() - new Date().getTime()) / 1000
+        );
+      }
+    }
+  };
+};
 
 const auth = (email, password, isLogin) => {
   return async (dispatch) => {
@@ -21,12 +65,15 @@ const auth = (email, password, isLogin) => {
       data: { idToken, localId, expiresIn },
     } = response;
 
-    const experationData = new Date(new Date().getDate() + expiresIn * 1000);
+    const expiresData = new Date(new Date().getDate() + expiresIn * 1000);
 
     localStorage.setItem("idToken", idToken);
     localStorage.setItem("localId", localId);
-    localStorage.setItem("idToken", idToken);
+    localStorage.setItem("idToken", expiresData);
+
+    dispatch(authSuccess(idToken));
+    dispatch(autoLogout(expiresData));
   };
 };
 
-export default auth;
+export { auth, autoLogout, logout, authSuccess, autoLogin };
