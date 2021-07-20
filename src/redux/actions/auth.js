@@ -11,7 +11,7 @@ const authSuccess = (idToken) => {
 const logout = () => {
   localStorage.removeItem("idToken");
   localStorage.removeItem("localId");
-  localStorage.removeItem("experiseData");
+  localStorage.removeItem("expiresIn");
   return {
     type: AUTH_LOGOUT,
   };
@@ -21,7 +21,7 @@ const autoLogout = (time) => {
   return (dispatch) => {
     setTimeout(() => {
       dispatch(logout());
-    }, time);
+    }, time * 1000);
   };
 };
 
@@ -31,7 +31,7 @@ const autoLogin = () => {
     if (!token) {
       dispatch(logout());
     } else {
-      const expiresData = new Date(localStorage.getItem("expiresData"));
+      const expiresData = new Date(localStorage.getItem("expiresIn"));
       if (expiresData <= new Date()) {
         dispatch(logout());
       } else {
@@ -65,14 +65,14 @@ const auth = (email, password, isLogin) => {
       data: { idToken, localId, expiresIn },
     } = response;
 
-    const expiresData = new Date(new Date().getDate() + expiresIn * 1000);
+    const expiresData = new Date(new Date().getTime() + expiresIn * 1000);
 
     localStorage.setItem("idToken", idToken);
     localStorage.setItem("localId", localId);
     localStorage.setItem("expiresIn", expiresData);
 
     dispatch(authSuccess(idToken));
-    dispatch(autoLogout(expiresData));
+    dispatch(autoLogout(expiresIn));
   };
 };
 

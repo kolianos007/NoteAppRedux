@@ -1,12 +1,15 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { connect } from "react-redux";
 import Button from "../../../components/UI/Button";
 import Input from "../../../components/UI/Input";
 import useInput from "../../../hooks/useInput";
+import { auth } from "../../../redux/actions/auth";
 import s from "./Registration.module.sass";
 
-const Registration = () => {
+// eslint-disable-next-line no-shadow
+const Registration = ({ auth }) => {
   const email = useInput("", { isEmpty: true, isEmail: true });
   const password = useInput("", { isEmpty: true, isPass: true });
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -21,20 +24,7 @@ const Registration = () => {
   };
 
   const registrationUser = async () => {
-    const authData = {
-      email: email.value,
-      password: password.value,
-      returnSecureToken: true,
-    };
-    try {
-      const response = await axios.post(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCiEqKYajHZOShxkFxvEJYXoEy-hdv2fNc",
-        authData
-      );
-      console.log(response);
-    } catch (e) {
-      console.log(e);
-    }
+    auth(email.value, password.value, false);
   };
 
   const onClickHandler = () => {
@@ -112,4 +102,4 @@ const Registration = () => {
   );
 };
 
-export default Registration;
+export default connect(null, { auth })(Registration);
