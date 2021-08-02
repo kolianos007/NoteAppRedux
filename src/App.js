@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { Switch, Route } from "react-router-dom";
+import PropTypes from "prop-types";
 
 import s from "./App.module.sass";
 import Footer from "./components/Footer/Footer";
@@ -8,7 +9,6 @@ import Header from "./components/Header/Header";
 import Login from "./containers/Auth/Login/Login";
 import Registration from "./containers/Auth/Registration/Registration";
 import changeTheme from "./redux/actions/theme";
-// import changeTheme from "./redux/actions/theme";
 
 const routes = (
   <Switch>
@@ -17,7 +17,7 @@ const routes = (
   </Switch>
 );
 
-function App() {
+function App({ isAuth }) {
   // setting theme style
   const localStorageColor = localStorage.getItem("themeStyle");
   const color =
@@ -35,6 +35,8 @@ function App() {
   }, []);
   // finished setting theme style
 
+  console.log(isAuth);
+
   return (
     <div className={`${s.app} ${themeColors}`}>
       <Header />
@@ -44,4 +46,18 @@ function App() {
   );
 }
 
-export default App;
+App.propTypes = {
+  isAuth: PropTypes.bool,
+};
+
+App.defaultProps = {
+  isAuth: false,
+};
+
+const mapStateToProps = ({ auth }) => {
+  return {
+    isAuth: !!auth.token,
+  };
+};
+
+export default connect(mapStateToProps)(App);
