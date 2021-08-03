@@ -37,7 +37,7 @@ const autoLogin = () => {
       } else {
         dispatch(authSuccess(token));
         dispatch(
-          autoLogout(expiresData.getTime() - new Date().getTime()) / 1000
+          autoLogout((expiresData.getTime() - new Date().getTime()) / 1000)
         );
       }
     }

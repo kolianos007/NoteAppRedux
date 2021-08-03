@@ -1,15 +1,14 @@
-/* eslint-disable no-shadow */
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import Button from "../../../components/UI/Button";
 import Input from "../../../components/UI/Input";
 import useInput from "../../../hooks/useInput";
 import { auth } from "../../../redux/actions/auth";
 import s from "./Login.module.sass";
 
-// eslint-disable-next-line react/prop-types
-const Login = ({ auth }) => {
+const Login = ({ authConnect }) => {
   const email = useInput("", { isEmpty: true, isEmail: true });
   const password = useInput("", { isEmpty: true, isPass: true });
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -20,7 +19,7 @@ const Login = ({ auth }) => {
   };
 
   const loginUser = () => {
-    auth(email.value, password.value, true);
+    authConnect(email.value, password.value, true);
   };
 
   const onClickHandler = () => {
@@ -100,4 +99,12 @@ const Login = ({ auth }) => {
   );
 };
 
-export default connect(null, { auth })(Login);
+Login.propTypes = {
+  authConnect: PropTypes.func,
+};
+
+Login.defaultProps = {
+  authConnect: () => {},
+};
+
+export default connect(null, { authConnect: auth })(Login);

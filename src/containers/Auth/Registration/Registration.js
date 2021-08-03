@@ -1,15 +1,14 @@
-/* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import Button from "../../../components/UI/Button";
 import Input from "../../../components/UI/Input";
 import useInput from "../../../hooks/useInput";
 import { auth } from "../../../redux/actions/auth";
 import s from "./Registration.module.sass";
 
-// eslint-disable-next-line no-shadow
-const Registration = ({ auth }) => {
+const Registration = ({ authConnect }) => {
   const email = useInput("", { isEmpty: true, isEmail: true });
   const password = useInput("", { isEmpty: true, isPass: true });
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -24,7 +23,7 @@ const Registration = ({ auth }) => {
   };
 
   const registrationUser = async () => {
-    auth(email.value, password.value, false);
+    authConnect(email.value, password.value, false);
   };
 
   const onClickHandler = () => {
@@ -102,4 +101,12 @@ const Registration = ({ auth }) => {
   );
 };
 
-export default connect(null, { auth })(Registration);
+Registration.propTypes = {
+  authConnect: PropTypes.func,
+};
+
+Registration.defaultProps = {
+  authConnect: () => {},
+};
+
+export default connect(null, { authConnect: auth })(Registration);
