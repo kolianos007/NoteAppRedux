@@ -9,14 +9,14 @@ const PrivateRoute = ({ component: Component, isAuth, ...rest }) => {
     <Route
       {...rest}
       render={(props) =>
-        isAuth ? <Redirect to="/list" /> : <Component {...props} />
+        isAuth ? <Component {...props} /> : <Redirect to="/login" />
       }
     />
   );
 };
 
 PrivateRoute.propTypes = {
-  component: PropTypes.node.isRequired,
+  component: PropTypes.elementType.isRequired,
   isAuth: PropTypes.bool.isRequired,
 };
 

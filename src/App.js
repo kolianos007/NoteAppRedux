@@ -12,6 +12,7 @@ import changeTheme from "./redux/actions/theme";
 import { autoLogin } from "./redux/actions/auth";
 import NotesList from "./containers/Home/NotesList";
 import Logout from "./components/Logout/Logout";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 
 function App({ isAuth, autoLoginConnect }) {
   // setting theme style
@@ -37,23 +38,38 @@ function App({ isAuth, autoLoginConnect }) {
 
   console.log("auth", isAuth);
 
-  const routes = (
+  let routes = (
     <Switch>
       <Route path="/registration" component={Registration} />
-      <Route path="/login" component={Login} />
-      <Route path="/list" component={NotesList} />
-      <Route path="/logout" component={Logout} />
-      <Route
-        exact
-        path="/"
-        render={() => {
-          console.log(1111111111, isAuth);
-          isAuth ? <NotesList /> : <Login />;
-        }}
-      />
-      <Redirect to={isAuth ? "/list" : "/login"} />
+      <Route exact path={["/", "/login"]} component={Login} />
+      <Redirect to="/" />
+      {/* <PrivateRoute path="/" component={() => <NotesList />} /> */}
     </Switch>
   );
+
+  if (isAuth) {
+    routes = (
+      <Switch>
+        <PrivateRoute
+          exact
+          path={["/", "/list"]}
+          component={() => <NotesList />}
+        />
+        <Route path="/logout" component={Logout} />
+        <Redirect to="/" />
+      </Switch>
+    );
+  }
+
+  // const routes = (
+  //   <Switch>
+  //     <Route path="/registration" component={Registration} />
+  //     <Route path="/login" component={Login} />
+  //     <PrivateRoute path="/list" component={() => <NotesList />} />
+  //     <Route path="/logout" component={Logout} />
+  //     <PrivateRoute path="/" component={() => <NotesList />} />
+  //   </Switch>
+  // );
 
   return (
     <div className={`${s.app} ${themeColors}`}>
@@ -75,7 +91,6 @@ App.defaultProps = {
 };
 
 const mapStateToProps = ({ auth }) => {
-  console.log("isAuth", !!auth.token);
   return {
     isAuth: !!auth.token,
   };

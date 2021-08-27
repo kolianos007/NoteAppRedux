@@ -16,8 +16,18 @@ let header = (
 const Header = ({ isAuth }) => {
   if (isAuth) {
     header = (
-      <header className={s.header}>
+      <header className={`${s.header} ${s.headerAuth}`}>
         <div className={s.header_logo}>Noteapp</div>
+        <div className={s.header_greet}>
+          <label htmlFor="userName">
+            <i className="fas fa-pencil-alt" />
+            <input
+              id="userName"
+              className={s.inputGreet}
+              placeholder="Введите свое имя"
+            />
+          </label>
+        </div>
         <div className={s.header_wrapper}>
           <Switch />
           <Link to="/logout" className={s.logout}>

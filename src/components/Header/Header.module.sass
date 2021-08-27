@@ -1,14 +1,46 @@
 .header
-  min-height: 3.75rem 
+  min-height: 3.75rem
   padding: 0.875rem 0
   display: flex
   justify-content: center
   align-items: center
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05)
   background: var(--theme-header-color)
+  &_greet
+    color: var(--title-color)
+    font-size: 1.125rem
+    font-weight: 500
+    label
+      cursor: pointer
+    input
+      cursor: pointer
+      &:focus-visible
+        border: none
+        border-color: #fff
+        outline: none
+      &::placeholder
+        color: var(--title-color)
+    i
+      margin-right: .5rem
   &_logo
     font-weight: 700
     color: var(--title-color)
     font-size: 1.5rem
     line-height: 1.9rem
     text-transform: uppercase
+  &_wrapper
+    display: flex
+    align-items: center
+  &Auth
+    justify-content: space-between
+    padding: 0 3.125rem
+
+.logout
+  font-size: 1.125rem
+  line-height: 1.438rem
+  color: var(--text-color)
+  text-decoration: none
+  font-weight: 500
+
+.inputGreet
+  border: none

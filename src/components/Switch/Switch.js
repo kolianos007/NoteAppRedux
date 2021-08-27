@@ -1,9 +1,10 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import PropTypes from "prop-types";
+import { connect, useDispatch, useSelector } from "react-redux";
 import changeTheme from "../../redux/actions/theme";
 import s from "./Switch.module.sass";
 
-const Switch = () => {
+const Switch = ({ isAuth }) => {
   const dispatch = useDispatch();
   const localStorageColor = localStorage.getItem("themeStyle");
 
@@ -24,7 +25,10 @@ const Switch = () => {
   });
 
   return (
-    <label htmlFor="theme" className={s.switcher}>
+    <label
+      htmlFor="theme"
+      className={`${s.switcher} ${isAuth ? s.switcher_auth : ""}`}
+    >
       <input
         type="checkbox"
         id="theme"
@@ -37,4 +41,18 @@ const Switch = () => {
   );
 };
 
-export default Switch;
+const mapStateToProps = ({ auth }) => {
+  return {
+    isAuth: !!auth.token,
+  };
+};
+
+Switch.propTypes = {
+  isAuth: PropTypes.bool,
+};
+
+Switch.defaultProps = {
+  isAuth: false,
+};
+
+export default connect(mapStateToProps)(Switch);
