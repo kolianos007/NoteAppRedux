@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Switch from "../Switch";
+import { postName } from "../../redux/actions/userName";
 
 import s from "./Header.module.sass";
-import { postName } from "../../redux/actions/userName";
 
 let header = (
   <header className={s.header}>
