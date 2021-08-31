@@ -12,16 +12,25 @@
     font-weight: 500
     label
       cursor: pointer
+      display: flex
     input
-      cursor: pointer
+      cursor: text
+      background: var(--theme-header-color)
+      color: var(--title-color)
+      &~button
+        display: none
       &:focus-visible
         border: none
         border-color: #fff
         outline: none
+        border-bottom: 1px solid var(--title-color)
+        &~button
+          display: flex
       &::placeholder
         color: var(--title-color)
     i
       margin-right: .5rem
+      color: var(--title-color)
   &_logo
     font-weight: 700
     color: var(--title-color)
@@ -35,6 +44,9 @@
     justify-content: space-between
     padding: 0 3.125rem
 
+.formName
+  position: relative
+
 .logout
   font-size: 1.125rem
   line-height: 1.438rem
@@ -44,3 +56,9 @@
 
 .inputGreet
   border: none
+  &_btn
+    border: none
+    background: inherit
+    position: absolute
+    right: -13px
+    cursor: pointer

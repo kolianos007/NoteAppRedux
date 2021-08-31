@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Switch from "../Switch";
 
 import s from "./Header.module.sass";
+import { postName } from "../../redux/actions/userName";
 
 let header = (
   <header className={s.header}>
@@ -13,20 +14,38 @@ let header = (
   </header>
 );
 
-const Header = ({ isAuth }) => {
+const Header = ({ isAuth, saveName }) => {
+  const [name, setName] = useState("");
+
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    name !== "" ? saveName(name) : false;
+  };
+
+  const onChangeHandler = (e) => {
+    setName(e.target.value);
+  };
+
   if (isAuth) {
     header = (
       <header className={`${s.header} ${s.headerAuth}`}>
         <div className={s.header_logo}>Noteapp</div>
         <div className={s.header_greet}>
-          <label htmlFor="userName">
-            <i className="fas fa-pencil-alt" />
-            <input
-              id="userName"
-              className={s.inputGreet}
-              placeholder="Введите свое имя"
-            />
-          </label>
+          <form className={s.formName} onSubmit={onSubmitHandler}>
+            <label htmlFor="userName">
+              <i className="fas fa-pencil-alt" />
+              <input
+                id="userName"
+                className={s.inputGreet}
+                placeholder="Введите свое имя"
+                value={name}
+                onChange={onChangeHandler}
+              />
+              <button type="submit" className={s.inputGreet_btn}>
+                <i className="fas fa-save" />
+              </button>
+            </label>
+          </form>
         </div>
         <div className={s.header_wrapper}>
           <Switch />
@@ -42,10 +61,12 @@ const Header = ({ isAuth }) => {
 
 Header.propTypes = {
   isAuth: PropTypes.bool,
+  saveName: PropTypes.func,
 };
 
 Header.defaultProps = {
   isAuth: false,
+  saveName: () => {},
 };
 
 const mapStateToProps = ({ auth }) => {
@@ -54,4 +75,4 @@ const mapStateToProps = ({ auth }) => {
   };
 };
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps, { saveName: postName })(Header);
