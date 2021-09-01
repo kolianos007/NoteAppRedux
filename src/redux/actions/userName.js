@@ -10,9 +10,13 @@ const setName = (name) => {
 
 const postName = (name) => {
   return async (dispatch) => {
+    const uid = localStorage.getItem("localId");
+    const authTok = localStorage.getItem("idToken");
+    console.log("uid", uid);
     await axios
-      .post(
-        "https://appnoteredux-55ec0-default-rtdb.firebaseio.com/users.json",
+      .put(
+        // `https://appnoteredux-55ec0-default-rtdb.firebaseio.com/users/${uid}.json`,
+        `https://appnoteredux-55ec0-default-rtdb.firebaseio.com/users/${uid}.json?auth=${authTok}`,
         { name }
       )
       .then((data) => console.log(data));

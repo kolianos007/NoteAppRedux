@@ -41,9 +41,13 @@ const Header = ({ isAuth, saveName }) => {
                 value={name}
                 onChange={onChangeHandler}
               />
-              <button type="submit" className={s.inputGreet_btn}>
-                <i className="fas fa-save" />
-              </button>
+              {name ? (
+                <button type="submit" className={s.inputGreet_btn}>
+                  <i className="fas fa-save" />
+                </button>
+              ) : (
+                ""
+              )}
             </label>
           </form>
         </div>
