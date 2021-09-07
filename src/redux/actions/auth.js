@@ -12,6 +12,7 @@ const logout = () => {
   localStorage.removeItem("idToken");
   localStorage.removeItem("localId");
   localStorage.removeItem("expiresIn");
+  localStorage.removeItem("nameNoteApp");
   return {
     type: AUTH_LOGOUT,
   };
