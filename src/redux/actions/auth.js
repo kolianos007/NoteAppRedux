@@ -62,8 +62,9 @@ const auth = (email, password, isLogin) => {
     }
 
     const response = await axios.post(url, authData);
+    console.log(response);
     const {
-      data: { idToken, localId, expiresIn },
+      data: { idToken, localId, expiresIn, displayName },
     } = response;
 
     const expiresData = new Date(new Date().getTime() + expiresIn * 1000);
@@ -71,6 +72,7 @@ const auth = (email, password, isLogin) => {
     localStorage.setItem("idToken", idToken);
     localStorage.setItem("localId", localId);
     localStorage.setItem("expiresIn", expiresData);
+    localStorage.setItem("nameNoteApp", displayName);
 
     dispatch(authSuccess(idToken));
     dispatch(autoLogout(expiresIn));
