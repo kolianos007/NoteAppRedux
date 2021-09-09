@@ -35,13 +35,13 @@ const Header = ({ isAuth, displayName, saveName, setNameProp }) => {
       : false;
   }, [localStorage.getItem("nameNoteApp")]);
 
-  console.log("displayName", typeof displayName);
+  console.log("displayName", displayName);
   if (isAuth) {
     header = (
       <header className={`${s.header} ${s.headerAuth}`}>
         <div className={s.header_logo}>Noteapp</div>
         <div className={s.header_greet}>
-          {displayName || localStorage.getItem("nameNoteApp") ? (
+          {displayName.name || localStorage.getItem("nameNoteApp") !== "" ? (
             <div className={s.header_greetAuth}>
               <img src={greetIco} alt={`Привет ${displayName.name}`} />
               <span>Привет, {displayName.name}!</span>

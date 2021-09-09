@@ -8,7 +8,8 @@ import useInput from "../../../hooks/useInput";
 import { auth } from "../../../redux/actions/auth";
 import s from "./Login.module.sass";
 
-const Login = ({ authConnect }) => {
+const Login = ({ loading, authConnect }) => {
+  // console.log(loading, "loading-------------------");
   const email = useInput("", { isEmpty: true, isEmail: true });
   const password = useInput("", { isEmpty: true, isPass: true });
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -29,6 +30,7 @@ const Login = ({ authConnect }) => {
   const visiblePass = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
+  console.log(loading);
   return (
     <div className={s.auth}>
       <div className="container">
@@ -87,6 +89,9 @@ const Login = ({ authConnect }) => {
               buttonClass="btn btn_big"
               text="Войти"
               onClick={onClickHandler}
+              loader
+              loading={loading}
+              loaderSize="3.125rem"
             />
           </form>
           <div className={s.redirect}>
@@ -100,11 +105,20 @@ const Login = ({ authConnect }) => {
 };
 
 Login.propTypes = {
+  loading: PropTypes.bool,
   authConnect: PropTypes.func,
 };
 
 Login.defaultProps = {
+  loading: false,
   authConnect: () => {},
 };
 
-export default connect(null, { authConnect: auth })(Login);
+// eslint-disable-next-line no-shadow
+const mapStateToProps = ({ auth }) => {
+  return {
+    loading: auth.loading,
+  };
+};
+
+export default connect(mapStateToProps, { authConnect: auth })(Login);

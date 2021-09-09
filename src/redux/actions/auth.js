@@ -1,5 +1,11 @@
 import axios from "axios";
-import { AUTH_SUCCESS, AUTH_LOGOUT } from "./actionTypes";
+import { AUTH_LOADED, AUTH_SUCCESS, AUTH_LOGOUT } from "./actionTypes";
+
+const authLoaded = () => {
+  return {
+    type: AUTH_LOADED,
+  };
+};
 
 const authSuccess = (idToken) => {
   return {
@@ -47,6 +53,7 @@ const autoLogin = () => {
 
 const auth = (email, password, isLogin) => {
   return async (dispatch) => {
+    dispatch(authLoaded());
     const authData = {
       email,
       password,
@@ -60,7 +67,6 @@ const auth = (email, password, isLogin) => {
       url =
         "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCiEqKYajHZOShxkFxvEJYXoEy-hdv2fNc";
     }
-
     const response = await axios.post(url, authData);
     console.log(response);
     const {
