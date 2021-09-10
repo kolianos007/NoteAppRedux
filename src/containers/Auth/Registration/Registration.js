@@ -8,7 +8,7 @@ import useInput from "../../../hooks/useInput";
 import { auth } from "../../../redux/actions/auth";
 import s from "./Registration.module.sass";
 
-const Registration = ({ authConnect }) => {
+const Registration = ({ loading, authConnect }) => {
   const email = useInput("", { isEmpty: true, isEmail: true });
   const password = useInput("", { isEmpty: true, isPass: true });
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -89,6 +89,9 @@ const Registration = ({ authConnect }) => {
               buttonClass="btn btn_big"
               text="Зарегистрироваться"
               onClick={onClickHandler}
+              loader
+              loading={loading}
+              loaderSize="3.125rem"
             />
           </form>
           <div className={s.redirect}>
@@ -103,10 +106,19 @@ const Registration = ({ authConnect }) => {
 
 Registration.propTypes = {
   authConnect: PropTypes.func,
+  loading: PropTypes.bool,
 };
 
 Registration.defaultProps = {
   authConnect: () => {},
+  loading: false,
 };
 
-export default connect(null, { authConnect: auth })(Registration);
+// eslint-disable-next-line no-shadow
+const mapStateToProps = ({ auth }) => {
+  return {
+    loading: auth.loading,
+  };
+};
+
+export default connect(mapStateToProps, { authConnect: auth })(Registration);

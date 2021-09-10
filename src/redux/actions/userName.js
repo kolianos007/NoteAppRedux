@@ -31,7 +31,8 @@ const postName = (name) => {
       .then((response) => response.data)
       .then((data) => data.displayName);
 
-    if (displayName) {
+    if (displayName && displayName !== undefined) {
+      console.log("ddddddddddddddd", displayName);
       localStorage.setItem("nameNoteApp", displayName);
       dispatch(setName(displayName));
     } else {

@@ -1,4 +1,4 @@
-import { SET_NAME } from "../actions/actionTypes";
+import { SET_NAME, CLEAN_NAME } from "../actions/actionTypes";
 
 const initialState = {
   name: null,
@@ -10,6 +10,11 @@ const userNameReducer = (state = initialState, action) => {
       return {
         ...state,
         name: action.name,
+      };
+    case CLEAN_NAME:
+      return {
+        ...state,
+        name: null,
       };
     default:
       return state;

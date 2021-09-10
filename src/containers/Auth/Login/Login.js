@@ -8,7 +8,7 @@ import useInput from "../../../hooks/useInput";
 import { auth } from "../../../redux/actions/auth";
 import s from "./Login.module.sass";
 
-const Login = ({ loading, authConnect }) => {
+const Login = ({ loading, err, authConnect }) => {
   // console.log(loading, "loading-------------------");
   const email = useInput("", { isEmpty: true, isEmail: true });
   const password = useInput("", { isEmpty: true, isPass: true });
@@ -30,7 +30,7 @@ const Login = ({ loading, authConnect }) => {
   const visiblePass = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
-  console.log(loading);
+  console.log("errrrrrrrrrrrrrrrr", err);
   return (
     <div className={s.auth}>
       <div className="container">
@@ -84,6 +84,21 @@ const Login = ({ loading, authConnect }) => {
                   : ""
               }
             />
+            {err ? (
+              <div className="error-pop_wrapper">
+                <span
+                  className="error-pop"
+                  style={{
+                    position: "absolute",
+                  }}
+                >
+                  Вы ввели неверные данные или такого пользователя не
+                  существует. Попробуйте еще раз.
+                </span>
+              </div>
+            ) : (
+              ""
+            )}
             <Button
               className="btnWrapper btnWrapper__authForm"
               buttonClass="btn btn_big"
@@ -107,17 +122,20 @@ const Login = ({ loading, authConnect }) => {
 Login.propTypes = {
   loading: PropTypes.bool,
   authConnect: PropTypes.func,
+  err: PropTypes.bool,
 };
 
 Login.defaultProps = {
   loading: false,
   authConnect: () => {},
+  err: false,
 };
 
 // eslint-disable-next-line no-shadow
 const mapStateToProps = ({ auth }) => {
   return {
     loading: auth.loading,
+    err: auth.error,
   };
 };
 

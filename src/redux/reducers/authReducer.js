@@ -1,8 +1,14 @@
-import { AUTH_LOGOUT, AUTH_SUCCESS, AUTH_LOADED } from "../actions/actionTypes";
+import {
+  AUTH_LOGOUT,
+  AUTH_SUCCESS,
+  AUTH_LOADED,
+  AUTH_ERROR,
+} from "../actions/actionTypes";
 
 const initialState = {
   token: null,
   loading: false,
+  error: false,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -23,6 +29,12 @@ const authReducer = (state = initialState, action) => {
         ...state,
         token: null,
         loading: false,
+      };
+    case AUTH_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: true,
       };
     default:
       return state;

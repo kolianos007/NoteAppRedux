@@ -1,5 +1,11 @@
 import axios from "axios";
-import { AUTH_LOADED, AUTH_SUCCESS, AUTH_LOGOUT } from "./actionTypes";
+import {
+  AUTH_LOADED,
+  AUTH_SUCCESS,
+  AUTH_LOGOUT,
+  CLEAN_NAME,
+  AUTH_ERROR,
+} from "./actionTypes";
 
 const authLoaded = () => {
   return {
@@ -11,6 +17,19 @@ const authSuccess = (idToken) => {
   return {
     type: AUTH_SUCCESS,
     idToken,
+  };
+};
+
+const authFailed = (error) => {
+  return {
+    type: AUTH_ERROR,
+    error,
+  };
+};
+
+const cleanStateNameLogout = () => {
+  return {
+    type: CLEAN_NAME,
   };
 };
 
@@ -37,10 +56,12 @@ const autoLogin = () => {
     const token = localStorage.getItem("idToken");
     if (!token) {
       dispatch(logout());
+      dispatch(cleanStateNameLogout());
     } else {
       const expiresData = new Date(localStorage.getItem("expiresIn"));
       if (expiresData <= new Date()) {
         dispatch(logout());
+        dispatch(cleanStateNameLogout());
       } else {
         dispatch(authSuccess(token));
         dispatch(
@@ -67,8 +88,14 @@ const auth = (email, password, isLogin) => {
       url =
         "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCiEqKYajHZOShxkFxvEJYXoEy-hdv2fNc";
     }
-    const response = await axios.post(url, authData);
-    console.log(response);
+    const response = await axios
+      .post(url, authData)
+      .catch((error) => dispatch(authFailed(error)));
+
+    if (response.error) {
+      return response;
+    }
+    console.log("response", response);
     const {
       data: { idToken, localId, expiresIn, displayName },
     } = response;
@@ -78,10 +105,14 @@ const auth = (email, password, isLogin) => {
     localStorage.setItem("idToken", idToken);
     localStorage.setItem("localId", localId);
     localStorage.setItem("expiresIn", expiresData);
-    localStorage.setItem("nameNoteApp", displayName);
+    if (displayName) {
+      localStorage.setItem("nameNoteApp", displayName);
+    }
 
     dispatch(authSuccess(idToken));
     dispatch(autoLogout(expiresIn));
+
+    return response;
   };
 };
 
