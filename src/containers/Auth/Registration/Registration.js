@@ -8,7 +8,7 @@ import useInput from "../../../hooks/useInput";
 import { auth } from "../../../redux/actions/auth";
 import s from "./Registration.module.sass";
 
-const Registration = ({ loading, authConnect }) => {
+const Registration = ({ loading, authConnect, err }) => {
   const email = useInput("", { isEmpty: true, isEmail: true });
   const password = useInput("", { isEmpty: true, isPass: true });
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -84,6 +84,21 @@ const Registration = ({ loading, authConnect }) => {
                   : ""
               }
             />
+            {err ? (
+              <div className="error-pop_wrapper">
+                <span
+                  className="error-pop"
+                  style={{
+                    position: "absolute",
+                  }}
+                >
+                  Такой пользователь уже существует. Введите корректные данные.{" "}
+                  <br />
+                </span>
+              </div>
+            ) : (
+              ""
+            )}
             <Button
               className="btnWrapper btnWrapper__authForm"
               buttonClass="btn btn_big"
@@ -107,17 +122,20 @@ const Registration = ({ loading, authConnect }) => {
 Registration.propTypes = {
   authConnect: PropTypes.func,
   loading: PropTypes.bool,
+  err: PropTypes.bool,
 };
 
 Registration.defaultProps = {
   authConnect: () => {},
   loading: false,
+  err: false,
 };
 
 // eslint-disable-next-line no-shadow
 const mapStateToProps = ({ auth }) => {
   return {
     loading: auth.loading,
+    err: auth.error,
   };
 };
 

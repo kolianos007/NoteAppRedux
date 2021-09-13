@@ -17,18 +17,21 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+        error: false,
       };
     case AUTH_SUCCESS:
       return {
         ...state,
         token: action.idToken,
         loading: false,
+        error: false,
       };
     case AUTH_LOGOUT:
       return {
         ...state,
         token: null,
         loading: false,
+        error: false,
       };
     case AUTH_ERROR:
       return {
