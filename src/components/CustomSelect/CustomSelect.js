@@ -11,8 +11,8 @@ const CustomSelect = () => {
       </div>
       <ul className={s.customSelectContent}>
         <li>14 декабря 2020</li>
-        <li>14 января 2020</li>
-        <li>14 декабря 2020</li>
+        <li>03 января 2021</li>
+        <li>31 августа 2020</li>
       </ul>
     </div>
   );

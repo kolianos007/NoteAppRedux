@@ -1,3 +1,36 @@
-.filterBar
-    display: flex
-    justify-content: space-between
+.customSelect
+    position: relative
+    min-width: 270px
+    &Button
+        background: var(--theme-input-bg)
+        border: 1px solid var(--theme-input-border-color)
+        box-sizing: border-box
+        border-radius: 5px
+        padding: 0.75rem 1.25rem
+        width: 100%
+        display: flex
+        justify-content: space-between
+        align-items: center
+        color: var(--text-color)
+        font-size: 0.865rem
+        line-height: 1.135rem
+        cursor: pointer
+    &Content
+        background: var(--theme-input-bg)
+        border: 1px solid var(--theme-input-border-color)
+        border-radius: 5px
+        list-style-type: none
+        margin: 0
+        padding: 0
+        margin-top: 1px
+        h0
+        li
+            padding: 0.25rem 1.25rem 0.25rem
+            cursor: pointer
+            transition: .3s
+            background: var(--theme-input-bg)
+            display: block
+            &:hover
+                background: var(--theme-input-border-color)
+    i
+        color: var(--btn-color)
