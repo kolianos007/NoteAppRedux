@@ -1,4 +1,37 @@
-.filterBar
-    margin-top: 1.875rem
-    display: flex
-    justify-content: space-between
+.filter
+    &Bar
+        margin-top: 1.875rem
+        >div
+            width: 100%
+            &:first-child
+                display: flex
+                justify-content: space-between
+            &:last-child
+                display: flex
+                justify-content: flex-end
+                >div
+                    display: flex
+                    align-items: center
+    &Title
+        font-size: 1.125rem
+        color: var(--title-color)
+        line-height: 1.5rem
+        font-weight: 500
+    &Radio
+        &:not(:last-child)
+            margin-right: 0.5rem
+        input
+            display: none
+        label
+            line-height: 1rem
+            font-size: 1rem
+            cursor: pointer
+
+        input:checked ~ label
+            color: var(--btn-color)
+    &Grid
+        display: flex
+        align-items: center
+        >div
+            display: flex
+            height: 1rem
