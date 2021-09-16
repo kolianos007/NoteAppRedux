@@ -14,7 +14,7 @@ const FilterGrid = () => {
             id="radio-col"
             value="col"
             name="filter"
-            checked
+            defaultChecked
           />
           <label className={s.filterButton} htmlFor="radio-col">
             <i className="fas fa-th" />

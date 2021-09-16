@@ -76,16 +76,18 @@ function App({ isAuth, autoLoginConnect }) {
   return (
     <div className={`${s.app} ${themeColors}`}>
       <Header />
-      <div className="container">
-        {isAuth ? (
-          <>
-            <Nav /> <FilterBar />
-          </>
-        ) : (
-          ""
-        )}
-        {routes}
-      </div>
+      <main className="main">
+        <div className="container">
+          {isAuth ? (
+            <>
+              <Nav /> <FilterBar />
+            </>
+          ) : (
+            ""
+          )}
+          {routes}
+        </div>
+      </main>
       <Footer />
     </div>
   );

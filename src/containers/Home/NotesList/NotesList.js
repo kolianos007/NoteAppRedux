@@ -1,7 +1,8 @@
 import React from "react";
+import EmptyList from "./EmptyList/EmptyList";
 
 const NotesList = () => {
-  return <div>NotesList</div>;
+  return <EmptyList />;
 };
 
 export default NotesList;

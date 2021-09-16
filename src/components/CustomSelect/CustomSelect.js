@@ -3,12 +3,13 @@ import PropTypes from "prop-types";
 
 import s from "./CustomSelect.module.sass";
 
-const CustomSelect = ({ data, selected, setSelected }) => {
+const CustomSelect = ({ data, selected, setSelected, size }) => {
   const [isActive, setIsActive] = useState(false);
   const [isDirty, setIsDirty] = useState(false);
+  const sizeSelect = size === "Sm" ? s.customSelectSm : s.customSelectBig;
 
   return (
-    <div className={s.customSelect}>
+    <div className={`${s.customSelect} ${sizeSelect}`}>
       <button
         type="button"
         onClick={() => setIsActive(!isActive)}
@@ -49,6 +50,11 @@ CustomSelect.propTypes = {
     .isRequired,
   setSelected: PropTypes.func.isRequired,
   data: PropTypes.arrayOf(PropTypes.any).isRequired,
+  size: PropTypes.string,
+};
+
+CustomSelect.defaultProps = {
+  size: "",
 };
 
 export default CustomSelect;

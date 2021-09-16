@@ -17,6 +17,7 @@ const FilterBar = () => {
           data={date}
           selected={selected}
           setSelected={setSelected}
+          size="Big"
         />
         <Search />
       </div>

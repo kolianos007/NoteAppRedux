@@ -24,3 +24,23 @@
                 left: 0
                 background: var(--secondary-title-color)
                 // border-bottom: 2px solid var(--secondary-title-color)
+
+@media (max-width: 1200px)
+
+    .nav
+        width: auto
+        white-space: nowrap
+        overflow: auto
+        overflow-y: hidden
+        justify-content: unset
+        &::-webkit-scrollbar
+            height: 3px
+            background: #8F929F
+            border-radius: 5px
+        &::-webkit-scrollbar-thumb
+            background: #fff
+            border-radius: 5px
+        &::-webkit-scrollbar-track
+            border-radius: 5px
+        &Link
+            margin: 0 1rem

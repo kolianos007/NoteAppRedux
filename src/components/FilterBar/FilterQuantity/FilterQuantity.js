@@ -13,6 +13,7 @@ const FilterQuantity = () => {
         data={quantityPerPage}
         selected={selected}
         setSelected={setSelected}
+        size="Sm"
       />
     </div>
   );
