@@ -15,6 +15,7 @@ import Logout from "./components/Logout/Logout";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import Nav from "./components/Nav/Nav";
 import FilterBar from "./components/FilterBar/FilterBar";
+import CreateNote from "./containers/Home/CreateNote/CreateNote";
 
 function App({ isAuth, autoLoginConnect }) {
   // setting theme style
@@ -45,7 +46,7 @@ function App({ isAuth, autoLoginConnect }) {
       <Route path="/registration" component={Registration} />
       <Route exact path={["/", "/login"]} component={Login} />
       {/* Изза закоментированого радериекта, даже когла Auth путь меняется на /, потому что сначала испольняется этот роутер до момента пока не станет Auth */}
-      <Redirect to="/" />
+      {/* <Redirect to="/" /> */}
     </Switch>
   );
 
@@ -56,7 +57,7 @@ function App({ isAuth, autoLoginConnect }) {
         <PrivateRoute path={["/fulfilled"]} component={() => <NotesList />} />
         <PrivateRoute path={["/unfulfilled"]} component={() => <NotesList />} />
         <PrivateRoute path={["/favorites"]} component={() => <NotesList />} />
-        <PrivateRoute path={["/create"]} component={() => <NotesList />} />
+        <PrivateRoute path={["/create"]} component={() => <CreateNote />} />
         <Route path="/logout" component={Logout} />
         <Redirect to="/list" />
       </Switch>
