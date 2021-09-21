@@ -69,6 +69,7 @@ const autoLogin = () => {
         );
       }
     }
+    return token;
   };
 };
 
@@ -112,6 +113,7 @@ const auth = (email, password, isLogin) => {
     dispatch(authSuccess(idToken));
     dispatch(autoLogout(expiresIn));
 
+    console.log("response", response);
     return response;
   };
 };

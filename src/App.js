@@ -16,10 +16,8 @@ import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import Nav from "./components/Nav/Nav";
 import FilterBar from "./components/FilterBar/FilterBar";
 import CreateNote from "./containers/Home/CreateNote/CreateNote";
-import { initializedApp } from "./redux/actions/app";
 
-function App({ isAuth, autoLoginConnect, initialized, initApp }) {
-  console.log("initialized", initialized);
+function App({ isAuth, autoLoginConnect }) {
   // setting theme style
   const localStorageColor = localStorage.getItem("themeStyle");
   const color =
@@ -36,10 +34,6 @@ function App({ isAuth, autoLoginConnect, initialized, initApp }) {
     dispatch(changeTheme(color));
   }, []);
   // finished setting theme style
-
-  useEffect(() => {
-    initApp();
-  }, []);
 
   useEffect(() => {
     autoLoginConnect();
@@ -103,8 +97,6 @@ function App({ isAuth, autoLoginConnect, initialized, initApp }) {
 App.propTypes = {
   isAuth: PropTypes.bool,
   autoLoginConnect: PropTypes.func,
-  initialized: PropTypes.bool.isRequired,
-  initApp: PropTypes.func.isRequired,
 };
 
 App.defaultProps = {
@@ -112,14 +104,12 @@ App.defaultProps = {
   autoLoginConnect: () => {},
 };
 
-const mapStateToProps = ({ auth, app }) => {
+const mapStateToProps = ({ auth }) => {
   return {
     isAuth: !!auth.token,
-    initialized: app.initialized,
   };
 };
 
 export default connect(mapStateToProps, {
   autoLoginConnect: autoLogin,
-  initApp: initializedApp,
 })(App);
