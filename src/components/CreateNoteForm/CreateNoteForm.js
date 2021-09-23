@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import DateTimePicker from "react-datetime-picker";
+// import DateTimePicker from "react-datetime-picker";
+import DateTimePicker from "react-datetime-picker/dist/entry.nostyle";
 import Button from "../UI/Button";
 
 import s from "./CreateNoteForm.module.sass";
+import "./DateTimePicker.sass";
 
 const CreateNoteForm = ({ data }) => {
   const title = data ? "Редактировать заметку" : "Создать новую заметку";
@@ -17,7 +19,8 @@ const CreateNoteForm = ({ data }) => {
       <div className="default-title">{title}</div>
       <form action="" className={s.form}>
         <DateTimePicker
-          calendarClassName={s.formCalendar}
+          calendarClassName={s.formCalendarWrapp}
+          className={s.formCalendar}
           onChange={onChange}
           value={value}
           locale="ru-RU"
@@ -28,10 +31,21 @@ const CreateNoteForm = ({ data }) => {
           yearPlaceholder="год"
         />
         <div className={s.formFieldWrapper}>
-          <input type="text" name="title" placeholder="Что нужно сделать" />
+          <input
+            className={`${s.formInput}`}
+            type="text"
+            name="title"
+            placeholder="Что нужно сделать"
+          />
         </div>
         <div className={s.formFieldWrapper}>
-          <input type="text" name="title" placeholder="Подробное описание" />
+          <textarea
+            className={s.formInput}
+            type="text"
+            name="title"
+            placeholder="Подробное описание"
+            style={{ minHeight: "150px" }}
+          />
         </div>
         <Button
           className="btnWrapper"
