@@ -32,8 +32,9 @@ const getNote = () => async (dispatch) => {
     .get(
       `https://appnoteredux-55ec0-default-rtdb.firebaseio.com/notes/${uid}.json?auth=${authTok}`
     )
-    .then((res) => notesSuccess(res.data))
-    .catch(() => notesError());
+    // .then((res) => dispatch(notesSuccess(res.data)))
+    .then((res) => dispatch(notesSuccess(res.data)))
+    .catch((err) => dispatch(notesError(err)));
 
   return notesList;
 };

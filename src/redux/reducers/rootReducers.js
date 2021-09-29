@@ -10,7 +10,7 @@ const rootReducers = combineReducers({
   app: appReducer,
   auth: authReducer,
   name: userNameReducer,
-  notesList: notesReducer,
+  notes: notesReducer,
 });
 
 export default rootReducers;

@@ -1,0 +1,101 @@
+.note
+    flex: 0 1 360px
+    height: 260px
+    background: var(--theme-input-bg)
+    border-radius: 0.625rem
+    padding: 1.25rem 1.875rem
+    max-width: 360px
+    display: flex
+    flex-direction: column
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05)
+    &Topline
+        display: flex
+        justify-content: space-between
+        align-items: center
+    &Date
+        color: var(--text-color)
+        font-size: 1rem
+        line-height: 1.25rem
+    button
+        background: transparent
+        border: none
+        color: var(--ico-color)
+        transition: .3s
+        &:hover
+            color: var(--btn-color)
+            animation: rotates 0.3s ease-in
+    &Favourite
+        span
+            &::after
+                content: '\f004'
+                font-family: "Font Awesome 5 FREE"
+    &Edit
+        span
+            &::after
+                content: '\f044'
+                font-family: "Font Awesome 5 FREE"
+    &Delete
+        span
+            &::after
+                content: '\f2ed'
+                font-family: "Font Awesome 5 FREE"
+    &Content
+        flex-grow: 1
+        margin: 1.25rem 0
+    &Complete
+        &>input
+            position: absolute
+            z-index: -1
+            opacity: 0
+            width: 20px
+            height: 20px
+            box-sizing: border-box
+            &:checked+span::before
+                background-color: var(--btn-color)
+                background-image: url(../../images/ico-checkbox.svg)
+        &>span
+            display: inline-flex
+            align-items: center
+            user-select: none
+            cursor: pointer
+            font-size: 1.5rem
+            color: var(--title-color)
+            font-weight: 500
+            &::before
+                content: ''
+                display: inline-block
+                width: 25px
+                height: 25px
+                flex-shrink: 0
+                flex-grow: 0
+                border: 1px solid var(--btn-color)
+                border-radius: 50%
+                background-repeat: no-repeat
+                background-position: center center
+                background-size: 50% 50%
+                cursor: pointer
+                margin-right: 0.625rem
+                box-sizing: border-box
+    &Text
+        font-size: 1.125rem
+        color: var(--text-color)
+        line-height: 1.4rem
+    &Botline
+        display: flex
+        justify-content: flex-end
+    &Edit
+        margin-right: 0.625rem
+
+.ico
+    font-size: 1.25rem
+    line-height: 1.25rem
+    cursor: pointer
+    transition: .3s
+
+@keyframes rotates
+    25%
+        transform: rotate(-10deg)
+    50%
+        transform: rotate(-0deg)
+    75%
+        transform: rotate(10deg)
