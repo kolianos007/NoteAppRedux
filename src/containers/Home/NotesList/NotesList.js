@@ -19,11 +19,12 @@ const NotesList = ({ getNoteConnect, notes, loader }) => {
       {loader ? (
         <Loader width="5rem" height="5rem" />
       ) : notes.length > 0 ? (
-        <BlockDateNotes />
+        notes.map(({ date, id, notesList }) => {
+          return <BlockDateNotes key={id} notesDate={date} notes={notesList} />;
+        })
       ) : (
         <EmptyList />
       )}
-      {/* {notes.length > 0 ? <div>Notes</div> : <EmptyList />} */}
     </div>
   );
 };

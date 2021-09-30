@@ -4,19 +4,22 @@ import Note from "../Note/Note";
 
 import s from "./BlockDateNotes.module.sass";
 
-const BlockDateNotes = ({ title = "22 ноября 2020" }) => {
+const BlockDateNotes = ({ notes, notesDate }) => {
   return (
     <div className={s.blockDateNotes}>
-      <div className={s.blockDateNotesTitle}>{title}</div>
+      <div className={s.blockDateNotesTitle}>{notesDate}</div>
       <div className={s.noteListWrapper}>
-        <Note />
+        {notes.map(({ id, ...note }) => {
+          return <Note key={id} note={note} />;
+        })}
       </div>
     </div>
   );
 };
 
 BlockDateNotes.propTypes = {
-  title: PropTypes.string.isRequired,
+  notes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  notesDate: PropTypes.string.isRequired,
 };
 
 export default BlockDateNotes;

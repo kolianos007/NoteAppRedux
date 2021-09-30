@@ -1,29 +1,43 @@
 import React from "react";
 import ClampLines from "react-clamp-lines";
+import PropTypes from "prop-types";
 import s from "./Note.module.sass";
 
-const Note = () => {
+const Note = ({ note: { id, date, title, content, liked, ready } }) => {
   return (
     <div className={s.note}>
       <div className={s.noteTopline}>
-        <span className={s.noteDate}>22 ноябрь 2020</span>
-        <button type="button" className={s.noteFavourite}>
+        <span className={s.noteDate}>{date}</span>
+        <button
+          type="button"
+          className={
+            liked
+              ? [s.noteFavourite, s.noteFavouriteLike].join(" ")
+              : s.noteFavourite
+          }
+        >
           <span className={s.ico} />
         </button>
       </div>
       <div className={s.noteContent}>
         <div className={s.noteTitle}>
-          <label htmlFor="complete" className={s.noteComplete}>
-            <input type="checkbox" id="complete" name="complete" />
-            <span>Buy enough</span>
+          <label htmlFor={id} className={s.noteComplete}>
+            <input
+              type="checkbox"
+              id={id}
+              name="complete"
+              defaultChecked={!!ready}
+            />
+            <span>{title}</span>
           </label>
         </div>
         <ClampLines
-          text="Lorem"
+          text={content}
           lines={4}
           className={s.noteText}
-          innerElement="p"
+          innerElement="div"
           ellipsis="..."
+          buttons={false}
         />
       </div>
       <div className={s.noteBotline}>
@@ -36,6 +50,15 @@ const Note = () => {
       </div>
     </div>
   );
+};
+
+Note.propTypes = {
+  note: PropTypes.objectOf(PropTypes.any).isRequired,
+  // date: PropTypes.string.isRequired,
+  // title: PropTypes.string.isRequired,
+  // content: PropTypes.string.isRequired,
+  // liked: PropTypes.bool.isRequired,
+  // ready: PropTypes.bool.isRequired,
 };
 
 export default Note;

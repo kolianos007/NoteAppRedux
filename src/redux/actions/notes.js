@@ -12,6 +12,7 @@ const notesLoaded = () => {
 };
 
 const notesSuccess = (notesList) => {
+  console.log("NOTESLIST", notesList);
   return {
     type: GET_NOTES_SUCCESS,
     notesList,
