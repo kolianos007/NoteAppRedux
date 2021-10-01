@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import ClampLines from "react-clamp-lines";
 import PropTypes from "prop-types";
 import s from "./Note.module.sass";
+import Popup from "../UI/Popup/Popup";
+import CreateNoteForm from "../CreateNoteForm/CreateNoteForm";
 
 const Note = ({ note: { id, date, title, content, liked, ready } }) => {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <div className={s.note}>
       <div className={s.noteTopline}>
@@ -41,13 +44,25 @@ const Note = ({ note: { id, date, title, content, liked, ready } }) => {
         />
       </div>
       <div className={s.noteBotline}>
-        <button type="button" className={s.noteEdit}>
+        <button
+          type="button"
+          className={s.noteEdit}
+          onClick={() => setIsOpen(true)}
+        >
           <span className={s.ico} />
         </button>
         <button type="button" className={s.noteDelete}>
           <span className={s.ico} />
         </button>
       </div>
+      <Popup
+        isOpen={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+        }}
+      >
+        <CreateNoteForm />
+      </Popup>
     </div>
   );
 };
