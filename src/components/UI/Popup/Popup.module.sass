@@ -6,7 +6,6 @@
     width: 100vw
     height: 100vh
     opacity: 0
-    background-color: rgba(0,0,0,.3)
     transition: .3s
     z-index: 999
     top: 0
@@ -16,6 +15,15 @@
     &Active
         opacity: 1
         pointer-events: all
+    &Overlay
+        background-color: rgba(0,0,0,.3)
+        transition: .3s
+        width: 100vw
+        height: 100vh
+        position: absolute
+        top: 0
+        left: 0
+        z-index: -1
     &Content
         padding: 2.25rem
         width: 740px
@@ -26,6 +34,7 @@
         transform: scale(0.5)
         transition: .4s
         position: relative
+        z-index: 1
         &Active
             transform: scale(1)
     &Close

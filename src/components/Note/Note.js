@@ -61,7 +61,7 @@ const Note = ({ note: { id, date, title, content, liked, ready } }) => {
           setIsOpen(false);
         }}
       >
-        <CreateNoteForm />
+        <CreateNoteForm date={date} title={title} content={content} />
       </Popup>
     </div>
   );

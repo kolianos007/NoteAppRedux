@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from "react";
 import ReactDom from "react-dom";
 import PropTypes from "prop-types";
@@ -12,11 +13,21 @@ const Popup = ({ children, isOpen, themeColor, onClose }) => {
   return ReactDom.createPortal(
     <div
       className={
-        isOpen
-          ? [s.popup, themeColor, s.popupActive].join(" ")
-          : [s.popup, themeColor].join(" ")
+        isOpen ? [s.popup, themeColor, s.popupActive].join(" ") : s.popup
       }
     >
+      <div
+        className={
+          isOpen
+            ? [s.popupOverlay, s.popupOverlayActive].join(" ")
+            : s.popupOverlay
+        }
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          onClose();
+        }}
+      />
       <div
         className={
           isOpen
