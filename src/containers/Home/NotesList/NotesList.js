@@ -1,19 +1,14 @@
 /* eslint-disable no-nested-ternary */
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getNote } from "../../../redux/actions/notes";
 import EmptyList from "./EmptyList/EmptyList";
 import Loader from "../../../components/Loader";
 
 import s from "./NotesList.module.sass";
 import BlockDateNotes from "../../../components/BlockDateNotes/BlockDateNotes";
 
-const NotesList = ({ getNoteConnect, notes, loader }) => {
-  useEffect(() => {
-    getNoteConnect();
-  }, []);
-
+const NotesList = ({ notes, loader }) => {
   return (
     <div className={s.listWrapper}>
       {loader ? (
@@ -30,7 +25,6 @@ const NotesList = ({ getNoteConnect, notes, loader }) => {
 };
 
 NotesList.propTypes = {
-  getNoteConnect: PropTypes.func.isRequired,
   notes: PropTypes.arrayOf(PropTypes.object),
   loader: PropTypes.bool.isRequired,
 };
@@ -46,4 +40,4 @@ const mapStateToProps = ({ notes }) => {
   };
 };
 
-export default connect(mapStateToProps, { getNoteConnect: getNote })(NotesList);
+export default connect(mapStateToProps)(NotesList);

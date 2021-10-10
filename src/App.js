@@ -16,8 +16,9 @@ import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import Nav from "./components/Nav/Nav";
 import FilterBar from "./components/FilterBar/FilterBar";
 import CreateNote from "./containers/Home/CreateNote/CreateNote";
+import { getNote } from "./redux/actions/notes";
 
-function App({ isAuth, autoLoginConnect }) {
+function App({ isAuth, autoLoginConnect, getNoteConnect }) {
   // setting theme style
   const localStorageColor = localStorage.getItem("themeStyle");
   const color =
@@ -37,6 +38,7 @@ function App({ isAuth, autoLoginConnect }) {
 
   useEffect(() => {
     autoLoginConnect();
+    getNoteConnect();
   }, [isAuth]);
 
   console.log("auth", isAuth);
@@ -97,6 +99,7 @@ function App({ isAuth, autoLoginConnect }) {
 App.propTypes = {
   isAuth: PropTypes.bool,
   autoLoginConnect: PropTypes.func,
+  getNoteConnect: PropTypes.func.isRequired,
 };
 
 App.defaultProps = {
@@ -112,4 +115,5 @@ const mapStateToProps = ({ auth }) => {
 
 export default connect(mapStateToProps, {
   autoLoginConnect: autoLogin,
+  getNoteConnect: getNote,
 })(App);

@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { uuid } from "uuidv4";
-// import DateTimePicker from "react-datetime-picker";
+import { v4 as uuidv4 } from "uuid";
 import DateTimePicker from "react-datetime-picker/dist/entry.nostyle";
 import Button from "../UI/Button";
 
@@ -41,8 +40,10 @@ const CreateNoteForm = ({
   const [value, onChange] = useState(
     typeof date === "string" ? new Date(translateMonth(date)) : new Date()
   );
-  const [titleVal, setTitleVal] = useState("");
-  const [contentVal, setContentVal] = useState("");
+  const [titleVal, setTitleVal] = title ? useState(titleNote) : useState("");
+  const [contentVal, setContentVal] = content
+    ? useState(content)
+    : useState("");
   // const [note, setNote] = useState({
   //   content: "",
   //   date: "",
@@ -62,7 +63,7 @@ const CreateNoteForm = ({
   const clickHandler = () => {
     const noteItem = {
       content: contentVal,
-      id: uuid(),
+      id: uuidv4(),
       date: localDate,
       liked: false,
       ready: false,
@@ -70,11 +71,16 @@ const CreateNoteForm = ({
     };
     createNoteConnect(noteItem);
     finishCreateNoteConnect();
+
+    // сделать проверку на успешное создание заметки
+    onChange(new Date());
+    setTitleVal("");
+    setContentVal("");
   };
 
   return (
     <div className={s.formTemplate}>
-      <div className="default-title"> {title} </div>{" "}
+      <div className="default-title"> {title} </div>
       <form action="" className={s.form} onSubmit={(e) => e.preventDefault()}>
         <DateTimePicker
           calendarClassName={s.formCalendarWrapp}
@@ -99,7 +105,7 @@ const CreateNoteForm = ({
             value={titleVal}
             required
           />
-        </div>{" "}
+        </div>
         <div className={s.formFieldWrapper}>
           <textarea
             className={s.formInput}
@@ -113,15 +119,20 @@ const CreateNoteForm = ({
             onChange={(e) => setContentVal(e.target.value)}
             value={contentVal}
             required
-          />{" "}
-        </div>{" "}
-        <Button
-          className="btnWrapper"
-          buttonClass="btn btn_sm"
-          text={content ? "Редактировать заметку" : "Создать заметку"}
-          onClick={clickHandler}
-        />{" "}
-      </form>{" "}
+          />
+        </div>
+        <div className={s.formFieldWrapper}>
+          <Button
+            className="btnWrapper"
+            buttonClass="btn btn_sm"
+            text={content ? "Редактировать заметку" : "Создать заметку"}
+            onClick={clickHandler}
+          />
+          {/* {isSuccess ? (
+            <div className={s.successCreate}>Заметка успешно создана</div>
+          ) : null} */}
+        </div>
+      </form>
     </div>
   );
 };
