@@ -17,11 +17,12 @@ const rezetNote = () => {
 const finishCreateNote = () => async (dispatch, getState) => {
   const uid = localStorage.getItem("localId");
   const authTok = localStorage.getItem("idToken");
-  const getBlock = await axios
-    .get(
-      `https://appnoteredux-55ec0-default-rtdb.firebaseio.com/notes/${uid}.json?auth=${authTok}`
-    )
-    .then((res) => res.data);
+  // const getBlock = await axios
+  //   .get(
+  //     `https://appnoteredux-55ec0-default-rtdb.firebaseio.com/notes/${uid}.json?auth=${authTok}`
+  //   )
+  //   .then((res) => res.data);
+  const getBlock = getState().notes.notesList;
   console.log(getBlock);
   console.log(getState());
   let changeId;
