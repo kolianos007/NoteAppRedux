@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import EmptyList from "./EmptyList/EmptyList";
@@ -7,13 +7,18 @@ import Loader from "../../../components/Loader";
 
 import s from "./NotesList.module.sass";
 import BlockDateNotes from "../../../components/BlockDateNotes/BlockDateNotes";
+import { getNote } from "../../../redux/actions/notes";
 
-const NotesList = ({ notes, loader }) => {
+const NotesList = ({ notes, loader, getNoteConnect }) => {
+  useEffect(() => {
+    getNoteConnect();
+  }, []);
+
   return (
     <div className={s.listWrapper}>
       {loader ? (
         <Loader width="5rem" height="5rem" />
-      ) : notes.length > 0 ? (
+      ) : notes ? (
         notes.map(({ date, id, notesList }) => {
           return <BlockDateNotes key={id} notesDate={date} notes={notesList} />;
         })
@@ -27,6 +32,7 @@ const NotesList = ({ notes, loader }) => {
 NotesList.propTypes = {
   notes: PropTypes.arrayOf(PropTypes.object),
   loader: PropTypes.bool.isRequired,
+  getNoteConnect: PropTypes.func.isRequired,
 };
 
 NotesList.defaultProps = {
@@ -40,4 +46,4 @@ const mapStateToProps = ({ notes }) => {
   };
 };
 
-export default connect(mapStateToProps)(NotesList);
+export default connect(mapStateToProps, { getNoteConnect: getNote })(NotesList);

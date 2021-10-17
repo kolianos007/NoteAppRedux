@@ -2,6 +2,7 @@ import {
   GET_NOTES_LOADED,
   GET_NOTES_SUCCESS,
   GET_NOTES_ERROR,
+  EDIT_NOTE,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -29,6 +30,11 @@ const notesReducer = (state = initialState, action) => {
         loading: false,
         error: true,
         notesList: [],
+      };
+    case EDIT_NOTE:
+      return {
+        ...state,
+        note: action.note,
       };
     default:
       return state;

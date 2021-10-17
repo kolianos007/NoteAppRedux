@@ -3,14 +3,16 @@ import PropTypes from "prop-types";
 import Note from "../Note/Note";
 
 import s from "./BlockDateNotes.module.sass";
+import convertDate from "../../utils/convertDate";
 
 const BlockDateNotes = ({ notes, notesDate }) => {
   return (
     <div className={s.blockDateNotes}>
-      <div className={s.blockDateNotesTitle}>{notesDate}</div>
+      <div className={s.blockDateNotesTitle}>{convertDate(notesDate)}</div>
       <div className={s.noteListWrapper}>
+        {console.log(notes)}
         {notes.map(({ id, ...note }) => {
-          return <Note key={id} note={note} />;
+          return <Note key={id} note={note} id={id} />;
         })}
       </div>
     </div>
@@ -19,7 +21,7 @@ const BlockDateNotes = ({ notes, notesDate }) => {
 
 BlockDateNotes.propTypes = {
   notes: PropTypes.arrayOf(PropTypes.object).isRequired,
-  notesDate: PropTypes.string.isRequired,
+  notesDate: PropTypes.number.isRequired,
 };
 
 export default BlockDateNotes;

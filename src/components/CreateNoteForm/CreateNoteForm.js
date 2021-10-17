@@ -8,63 +8,44 @@ import Button from "../UI/Button";
 import s from "./CreateNoteForm.module.sass";
 import "./DateTimePicker.sass";
 import { createNote, finishCreateNote } from "../../redux/actions/createNote";
-
-const months = {
-  января: "January",
-  февраля: "February",
-  марта: "March",
-  апреля: "April",
-  мая: "May",
-  июня: "June",
-  июля: "July",
-  августа: "August",
-  сентября: "September",
-  октября: "October",
-  ноября: "November",
-  декабря: "December",
-};
-
-const translateMonth = (time) => {
-  const month = time.split(" ")[1];
-  return time.replace(month, months[month]);
-};
+// import convertDate from "../../utils/convertDate";
 
 const CreateNoteForm = ({
+  id,
   date,
   content,
   titleNote,
   createNoteConnect,
   finishCreateNoteConnect,
 }) => {
+  console.log("DATE", date);
+  console.log("ID", id);
   const title = titleNote ? "Редактировать заметку" : "Создать новую заметку";
   const [value, onChange] = useState(
-    typeof date === "string" ? new Date(translateMonth(date)) : new Date()
+    typeof date === "number" ? new Date(date) : new Date()
   );
   const [titleVal, setTitleVal] = title ? useState(titleNote) : useState("");
   const [contentVal, setContentVal] = content
     ? useState(content)
     : useState("");
-  // const [note, setNote] = useState({
-  //   content: "",
-  //   date: "",
-  //   id: "",
-  //   liked: false,
-  //   ready: false,
-  //   title: "",
-  // });
-  const options = {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
-  const localDate = value.toLocaleString("ru", options).replace(" г.", "");
-  console.log("localDate", localDate);
+
+  // const options = {
+  //   year: "numeric",
+  //   month: "long",
+  //   day: "numeric",
+  // };
+  // const localDate = value.toLocaleString("ru", options).replace(" г.", "");
+  // console.log("localDate", localDate);
 
   const clickHandler = () => {
+    console.log("VALUEVALUE", value);
     const noteItem = {
       content: contentVal,
-      id: uuidv4(),
-      date: localDate,
+      id: id || uuidv4(),
+      // date: localDate,
+      date: new Date(
+        `${value.getFullYear()}, ${value.getMonth() + 1},${value.getDate()}`
+      ).getTime(),
       liked: false,
       ready: false,
       title: titleVal,
@@ -138,7 +119,12 @@ const CreateNoteForm = ({
 };
 
 CreateNoteForm.propTypes = {
-  date: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]),
+  id: PropTypes.string,
+  date: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+    PropTypes.instanceOf(Date),
+  ]),
   content: PropTypes.string,
   titleNote: PropTypes.string,
   createNoteConnect: PropTypes.func.isRequired,
@@ -146,6 +132,7 @@ CreateNoteForm.propTypes = {
 };
 
 CreateNoteForm.defaultProps = {
+  id: "",
   date: "",
   content: "",
   titleNote: "",

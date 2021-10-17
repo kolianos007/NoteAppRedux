@@ -35,15 +35,24 @@ const getNote = () => async (dispatch) => {
     )
     // .then((res) => dispatch(notesSuccess(res.data)))
     .then((res) => {
+      console.log(res);
+      if (res.data === null) {
+        return null;
+      }
       console.log("results", res.data);
-      const filterNote = res.data
-        .filter((e) => e)
-        .map((el, i, arr) => {
-          console.log(arr);
-          // eslint-disable-next-line no-param-reassign
-          arr[i].notesList = el.notesList.filter((e) => e);
-          return el;
-        });
+      const filterNote =
+        res.data.length > 1
+          ? res.data
+              .filter((e) => e)
+              .map((el, i, arr) => {
+                console.log(arr);
+                // eslint-disable-next-line no-param-reassign
+                arr[i].id = i;
+                // eslint-disable-next-line no-param-reassign
+                arr[i].notesList = el.notesList.filter((e) => e);
+                return el;
+              })
+          : res.data;
       console.log(filterNote);
       // dispatch(notesSuccess(filterNote));
       return filterNote;
@@ -62,6 +71,8 @@ const getNote = () => async (dispatch) => {
       )
       .then((res) => dispatch(notesSuccess(res.data)))
       .catch((err) => dispatch(notesError(err)));
+  } else {
+    dispatch(notesSuccess(list));
   }
 
   return notesList;

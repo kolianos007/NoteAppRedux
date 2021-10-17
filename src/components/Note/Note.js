@@ -4,13 +4,15 @@ import PropTypes from "prop-types";
 import s from "./Note.module.sass";
 import Popup from "../UI/Popup/Popup";
 import CreateNoteForm from "../CreateNoteForm/CreateNoteForm";
+import convertDate from "../../utils/convertDate";
 
-const Note = ({ note: { id, date, title, content, liked, ready } }) => {
+const Note = ({ note: { date, title, content, liked, ready }, id }) => {
   const [isOpen, setIsOpen] = useState(false);
+  console.log("ID", id);
   return (
     <div className={s.note}>
       <div className={s.noteTopline}>
-        <span className={s.noteDate}>{date}</span>
+        <span className={s.noteDate}>{convertDate(date)}</span>
         <button
           type="button"
           className={
@@ -61,7 +63,12 @@ const Note = ({ note: { id, date, title, content, liked, ready } }) => {
           setIsOpen(false);
         }}
       >
-        <CreateNoteForm date={date} titleNote={title} content={content} />
+        <CreateNoteForm
+          id={id}
+          date={date}
+          titleNote={title}
+          content={content}
+        />
       </Popup>
     </div>
   );
@@ -69,6 +76,7 @@ const Note = ({ note: { id, date, title, content, liked, ready } }) => {
 
 Note.propTypes = {
   note: PropTypes.objectOf(PropTypes.any).isRequired,
+  id: PropTypes.string.isRequired,
   // date: PropTypes.string.isRequired,
   // title: PropTypes.string.isRequired,
   // content: PropTypes.string.isRequired,
