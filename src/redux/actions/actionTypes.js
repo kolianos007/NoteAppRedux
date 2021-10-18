@@ -18,6 +18,7 @@ const CREATE_NOTE = "CREATE_NOTE";
 const REZET_NOTE = "REZET_NOTE";
 
 const EDIT_NOTE = "EDIT_NOTE";
+const SAVE_EDIT_NOTE = "SAVE_EDIT_NOTE";
 
 export {
   CHANGE_THEME,
@@ -34,4 +35,5 @@ export {
   CREATE_NOTE,
   REZET_NOTE,
   EDIT_NOTE,
+  SAVE_EDIT_NOTE,
 };

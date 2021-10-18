@@ -4,6 +4,7 @@ import {
   GET_NOTES_SUCCESS,
   GET_NOTES_ERROR,
   EDIT_NOTE,
+  SAVE_EDIT_NOTE,
 } from "./actionTypes";
 
 const notesLoaded = () => {
@@ -30,6 +31,12 @@ const editNote = (note) => {
   return {
     type: EDIT_NOTE,
     note,
+  };
+};
+
+const saveEditNote = () => {
+  return {
+    type: SAVE_EDIT_NOTE,
   };
 };
 
@@ -90,10 +97,12 @@ const editNoteRequest = (note) => async (dispatch, getState) => {
   const uid = localStorage.getItem("localId");
   const authTok = localStorage.getItem("idToken");
   dispatch(editNote(note));
+  dispatch(saveEditNote());
+  console.log("Qqqqq", getState().notes.notesList);
 
-  await axios.put(
+  await axios.patch(
     `https://appnoteredux-55ec0-default-rtdb.firebaseio.com/notes/${uid}.json?auth=${authTok}`,
-    JSON.stringify(getState().notes.notesList)
+    getState().notes.notesList
   );
 };
 
@@ -104,4 +113,5 @@ export {
   getNote,
   editNote,
   editNoteRequest,
+  saveEditNote,
 };

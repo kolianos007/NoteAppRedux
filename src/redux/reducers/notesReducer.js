@@ -5,6 +5,7 @@ import {
   GET_NOTES_SUCCESS,
   GET_NOTES_ERROR,
   EDIT_NOTE,
+  SAVE_EDIT_NOTE,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -38,6 +39,10 @@ const notesReducer = (state = initialState, action) => {
       return {
         ...state,
         note: action.note,
+      };
+    case SAVE_EDIT_NOTE:
+      return {
+        ...state,
         notesList: state.notesList.map((el) => {
           console.log("DATEDATEDATE", el.date, action.note);
           if (el.date === action.note.date) {
