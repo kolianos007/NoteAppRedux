@@ -1,3 +1,5 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable consistent-return */
 import {
   GET_NOTES_LOADED,
   GET_NOTES_SUCCESS,
@@ -7,6 +9,7 @@ import {
 
 const initialState = {
   notesList: [],
+  note: {},
   loading: false,
   error: false,
 };
@@ -35,6 +38,20 @@ const notesReducer = (state = initialState, action) => {
       return {
         ...state,
         note: action.note,
+        notesList: state.notesList.map((el) => {
+          console.log("DATEDATEDATE", el.date, action.note);
+          if (el.date === action.note.date) {
+            el.notesList.map((elem) => {
+              console.log("IDIDIDIDIDIDI", elem.id, action.note.id);
+              if (elem.id === action.note.id) {
+                console.log("ACTIONNOTE", { ...action.note });
+                return { ...elem, ...action.note };
+              }
+              return el;
+            });
+          }
+          return el;
+        }),
       };
     default:
       return state;

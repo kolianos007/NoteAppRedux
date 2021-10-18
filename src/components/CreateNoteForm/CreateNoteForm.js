@@ -8,6 +8,7 @@ import Button from "../UI/Button";
 import s from "./CreateNoteForm.module.sass";
 import "./DateTimePicker.sass";
 import { createNote, finishCreateNote } from "../../redux/actions/createNote";
+import { editNoteRequest } from "../../redux/actions/notes";
 // import convertDate from "../../utils/convertDate";
 
 const CreateNoteForm = ({
@@ -17,6 +18,7 @@ const CreateNoteForm = ({
   titleNote,
   createNoteConnect,
   finishCreateNoteConnect,
+  editNoteRequestConnect,
 }) => {
   console.log("DATE", date);
   console.log("ID", id);
@@ -50,8 +52,12 @@ const CreateNoteForm = ({
       ready: false,
       title: titleVal,
     };
-    createNoteConnect(noteItem);
-    finishCreateNoteConnect();
+    if (id && date && content && titleNote) {
+      editNoteRequestConnect(noteItem);
+    } else {
+      createNoteConnect(noteItem);
+      finishCreateNoteConnect();
+    }
 
     // сделать проверку на успешное создание заметки
     onChange(new Date());
@@ -129,6 +135,7 @@ CreateNoteForm.propTypes = {
   titleNote: PropTypes.string,
   createNoteConnect: PropTypes.func.isRequired,
   finishCreateNoteConnect: PropTypes.func.isRequired,
+  editNoteRequestConnect: PropTypes.func.isRequired,
 };
 
 CreateNoteForm.defaultProps = {
@@ -141,4 +148,5 @@ CreateNoteForm.defaultProps = {
 export default connect(null, {
   createNoteConnect: createNote,
   finishCreateNoteConnect: finishCreateNote,
+  editNoteRequestConnect: editNoteRequest,
 })(CreateNoteForm);

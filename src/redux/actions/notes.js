@@ -3,6 +3,7 @@ import {
   GET_NOTES_LOADED,
   GET_NOTES_SUCCESS,
   GET_NOTES_ERROR,
+  EDIT_NOTE,
 } from "./actionTypes";
 
 const notesLoaded = () => {
@@ -22,6 +23,13 @@ const notesSuccess = (notesList) => {
 const notesError = () => {
   return {
     type: GET_NOTES_ERROR,
+  };
+};
+
+const editNote = (note) => {
+  return {
+    type: EDIT_NOTE,
+    note,
   };
 };
 
@@ -78,4 +86,22 @@ const getNote = () => async (dispatch) => {
   return notesList;
 };
 
-export { notesLoaded, notesSuccess, notesError, getNote };
+const editNoteRequest = (note) => async (dispatch, getState) => {
+  const uid = localStorage.getItem("localId");
+  const authTok = localStorage.getItem("idToken");
+  dispatch(editNote(note));
+
+  await axios.put(
+    `https://appnoteredux-55ec0-default-rtdb.firebaseio.com/notes/${uid}.json?auth=${authTok}`,
+    JSON.stringify(getState().notes.notesList)
+  );
+};
+
+export {
+  notesLoaded,
+  notesSuccess,
+  notesError,
+  getNote,
+  editNote,
+  editNoteRequest,
+};
