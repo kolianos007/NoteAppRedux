@@ -100,7 +100,7 @@ const editNoteRequest = (note) => async (dispatch, getState) => {
   dispatch(saveEditNote());
   console.log("Qqqqq", getState().notes.notesList);
 
-  await axios.patch(
+  await axios.put(
     `https://appnoteredux-55ec0-default-rtdb.firebaseio.com/notes/${uid}.json?auth=${authTok}`,
     getState().notes.notesList
   );

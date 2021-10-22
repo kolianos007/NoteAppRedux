@@ -44,17 +44,27 @@ const notesReducer = (state = initialState, action) => {
       return {
         ...state,
         notesList: state.notesList.map((el) => {
-          console.log("DATEDATEDATE", el.date, action.note);
-          if (el.date === action.note.date) {
-            el.notesList.map((elem) => {
-              console.log("IDIDIDIDIDIDI", elem.id, action.note.id);
-              if (elem.id === action.note.id) {
-                console.log("ACTIONNOTE", { ...action.note });
-                return { ...elem, ...action.note };
+          // console.log("DATEDATEDATE", el.date, state.note);
+          let q;
+          if (el.date === state.note.date) {
+            q = el.notesList.map((elem) => {
+              // console.log("IDIDIDIDIDIDI", elem.id, state.note.id);
+              if (elem.id === state.note.id) {
+                // console.log("ACTIONNOTE", { ...elem, ...state.note });
+                return { ...elem, ...state.note };
               }
-              return el;
+              console.log("elem", elem);
+              return elem;
             });
+            // eslint-disable-next-line no-param-reassign
+            el.notesList = q;
           }
+          // eslint-disable-next-line no-debugger
+          // debugger;
+          // eslint-disable-next-line no-param-reassign
+
+          console.log(q);
+          console.log("el", el);
           return el;
         }),
       };
