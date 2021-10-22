@@ -59,6 +59,7 @@ const getNote = () => async (dispatch) => {
         res.data.length > 1
           ? res.data
               .filter((e) => e)
+              .sort((a, b) => a.date - b.date)
               .map((el, i, arr) => {
                 console.log(arr);
                 // eslint-disable-next-line no-param-reassign

@@ -16,6 +16,7 @@ const CreateNoteForm = ({
   date,
   content,
   titleNote,
+  closeForm,
   createNoteConnect,
   finishCreateNoteConnect,
   editNoteRequestConnect,
@@ -57,12 +58,16 @@ const CreateNoteForm = ({
     } else {
       createNoteConnect(noteItem);
       finishCreateNoteConnect();
+      onChange(new Date());
+      setTitleVal("");
+      setContentVal("");
     }
 
-    // сделать проверку на успешное создание заметки
-    onChange(new Date());
-    setTitleVal("");
-    setContentVal("");
+    // // сделать проверку на успешное создание заметки
+    // onChange(new Date());
+    // setTitleVal("");
+    // setContentVal("");
+    closeForm(false);
   };
 
   return (
@@ -133,6 +138,7 @@ CreateNoteForm.propTypes = {
   ]),
   content: PropTypes.string,
   titleNote: PropTypes.string,
+  closeForm: PropTypes.func,
   createNoteConnect: PropTypes.func.isRequired,
   finishCreateNoteConnect: PropTypes.func.isRequired,
   editNoteRequestConnect: PropTypes.func.isRequired,
@@ -143,6 +149,7 @@ CreateNoteForm.defaultProps = {
   date: "",
   content: "",
   titleNote: "",
+  closeForm: () => {},
 };
 
 export default connect(null, {

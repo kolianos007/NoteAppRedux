@@ -68,6 +68,7 @@ const Note = ({ note: { date, title, content, liked, ready }, id }) => {
           date={date}
           titleNote={title}
           content={content}
+          closeForm={setIsOpen}
         />
       </Popup>
     </div>
