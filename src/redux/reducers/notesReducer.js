@@ -6,11 +6,13 @@ import {
   GET_NOTES_ERROR,
   EDIT_NOTE,
   SAVE_EDIT_NOTE,
+  DELETE_NOTE,
 } from "../actions/actionTypes";
 
 const initialState = {
   notesList: [],
   note: {},
+  visibleBlock: 2,
   loading: false,
   error: false,
 };
@@ -44,27 +46,38 @@ const notesReducer = (state = initialState, action) => {
       return {
         ...state,
         notesList: state.notesList.map((el) => {
-          // console.log("DATEDATEDATE", el.date, state.note);
-          let q;
+          let dateBlock;
           if (el.date === state.note.date) {
-            q = el.notesList.map((elem) => {
-              // console.log("IDIDIDIDIDIDI", elem.id, state.note.id);
+            dateBlock = el.notesList.map((elem) => {
               if (elem.id === state.note.id) {
-                // console.log("ACTIONNOTE", { ...elem, ...state.note });
                 return { ...elem, ...state.note };
               }
-              console.log("elem", elem);
               return elem;
             });
             // eslint-disable-next-line no-param-reassign
-            el.notesList = q;
+            el.notesList = dateBlock;
           }
-          // eslint-disable-next-line no-debugger
-          // debugger;
-          // eslint-disable-next-line no-param-reassign
-
-          console.log(q);
-          console.log("el", el);
+          return el;
+        }),
+      };
+    case DELETE_NOTE:
+      return {
+        ...state,
+        note: action.note,
+        notesList: state.notesList.map((el) => {
+          let dateBlock;
+          if (el.date === state.note.date) {
+            dateBlock = el.notesList
+              .map((elem) => {
+                if (elem.id === state.note.id) {
+                  return null;
+                }
+                return elem;
+              })
+              .filter((e) => e);
+            // eslint-disable-next-line no-param-reassign
+            el.notesList = dateBlock;
+          }
           return el;
         }),
       };

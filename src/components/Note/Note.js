@@ -1,14 +1,28 @@
 import React, { useState } from "react";
 import ClampLines from "react-clamp-lines";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import s from "./Note.module.sass";
 import Popup from "../UI/Popup/Popup";
 import CreateNoteForm from "../CreateNoteForm/CreateNoteForm";
 import convertDate from "../../utils/convertDate";
+import { deleteNoteRequest } from "../../redux/actions/notes";
 
-const Note = ({ note: { date, title, content, liked, ready }, id }) => {
+const Note = ({
+  note: { date, title, content, liked, ready },
+  id,
+  // deleteNoteRequestConnect,
+  noteStore,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const onDeleteHandler = () => {
+    console.log("id", id);
+    console.log("date", date);
+    // deleteNoteRequestConnect();
+  };
   console.log("ID", id);
+  console.log("noteStore", noteStore);
   return (
     <div className={s.note}>
       <div className={s.noteTopline}>
@@ -53,7 +67,11 @@ const Note = ({ note: { date, title, content, liked, ready }, id }) => {
         >
           <span className={s.ico} />
         </button>
-        <button type="button" className={s.noteDelete}>
+        <button
+          type="button"
+          className={s.noteDelete}
+          onClick={() => onDeleteHandler()}
+        >
           <span className={s.ico} />
         </button>
       </div>
@@ -78,11 +96,16 @@ const Note = ({ note: { date, title, content, liked, ready }, id }) => {
 Note.propTypes = {
   note: PropTypes.objectOf(PropTypes.any).isRequired,
   id: PropTypes.string.isRequired,
-  // date: PropTypes.string.isRequired,
-  // title: PropTypes.string.isRequired,
-  // content: PropTypes.string.isRequired,
-  // liked: PropTypes.bool.isRequired,
-  // ready: PropTypes.bool.isRequired,
+  noteStore: PropTypes.objectOf.isRequired,
+  // deleteNoteRequestConnect: PropTypes.func.isRequired,
 };
 
-export default Note;
+const mapStateToProps = ({ notes }) => {
+  return {
+    noteStore: notes.note,
+  };
+};
+
+export default connect(mapStateToProps, {
+  deleteNoteRequestConnect: deleteNoteRequest,
+})(Note);

@@ -41,33 +41,35 @@ const CreateNoteForm = ({
   // console.log("localDate", localDate);
 
   const clickHandler = () => {
-    console.log("VALUEVALUE", value);
-    const noteItem = {
-      content: contentVal,
-      id: id || uuidv4(),
-      // date: localDate,
-      date: new Date(
-        `${value.getFullYear()}, ${value.getMonth() + 1},${value.getDate()}`
-      ).getTime(),
-      liked: false,
-      ready: false,
-      title: titleVal,
-    };
-    if (id && date && content && titleNote) {
-      editNoteRequestConnect(noteItem);
-    } else {
-      createNoteConnect(noteItem);
-      finishCreateNoteConnect();
-      onChange(new Date());
-      setTitleVal("");
-      setContentVal("");
+    if (titleVal && contentVal) {
+      console.log("VALUEVALUE", value);
+      const noteItem = {
+        content: contentVal,
+        id: id || uuidv4(),
+        // date: localDate,
+        date: new Date(
+          `${value.getFullYear()}, ${value.getMonth() + 1},${value.getDate()}`
+        ).getTime(),
+        liked: false,
+        ready: false,
+        title: titleVal,
+      };
+      if (id && date && content && titleNote) {
+        editNoteRequestConnect(noteItem);
+      } else {
+        createNoteConnect(noteItem);
+        finishCreateNoteConnect();
+        onChange(new Date());
+        setTitleVal("");
+        setContentVal("");
+      }
+      closeForm(false);
     }
 
     // // сделать проверку на успешное создание заметки
     // onChange(new Date());
     // setTitleVal("");
     // setContentVal("");
-    closeForm(false);
   };
 
   return (
