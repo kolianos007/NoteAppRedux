@@ -1,5 +1,6 @@
 import axios from "axios";
 import { CREATE_NOTE, REZET_NOTE } from "./actionTypes";
+import { notesSuccess } from "./notes";
 
 const createNote = (note) => {
   return {
@@ -54,6 +55,8 @@ const finishCreateNote = () => async (dispatch, getState) => {
     : null;
   if (findDateNote) {
     findDateNote.notesList.push(getState().create.note);
+    getBlock[changeId] = findDateNote;
+    dispatch(notesSuccess(getBlock));
     console.log(findDateNote);
     await axios.put(
       `https://appnoteredux-55ec0-default-rtdb.firebaseio.com/notes/${uid}/${changeId}.json?auth=${authTok}`,

@@ -63,23 +63,28 @@ const notesReducer = (state = initialState, action) => {
     case DELETE_NOTE:
       return {
         ...state,
-        note: action.note,
-        notesList: state.notesList.map((el) => {
-          let dateBlock;
-          if (el.date === state.note.date) {
-            dateBlock = el.notesList
-              .map((elem) => {
-                if (elem.id === state.note.id) {
-                  return null;
-                }
-                return elem;
-              })
-              .filter((e) => e);
-            // eslint-disable-next-line no-param-reassign
-            el.notesList = dateBlock;
-          }
-          return el;
-        }),
+        notesList: state.notesList
+          .map((el) => {
+            let dateBlock;
+            if (el.date === action.date) {
+              if (el.notesList.length === 1) {
+                return null;
+              }
+              dateBlock = el.notesList
+                .map((elem) => {
+                  if (elem.id === action.id) {
+                    return null;
+                  }
+                  return elem;
+                })
+                .filter((e) => e);
+              console.log(dateBlock);
+              // eslint-disable-next-line no-param-reassign
+              el.notesList = dateBlock;
+            }
+            return el;
+          })
+          .filter((e) => e),
       };
     default:
       return state;

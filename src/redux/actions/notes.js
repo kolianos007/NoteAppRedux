@@ -41,10 +41,11 @@ const saveEditNote = () => {
   };
 };
 
-const deleteNote = (note) => {
+const deleteNote = (id, date) => {
   return {
     type: DELETE_NOTE,
-    note,
+    id,
+    date,
   };
 };
 
@@ -115,10 +116,10 @@ const editNoteRequest = (note) => async (dispatch, getState) => {
   );
 };
 
-const deleteNoteRequest = (note) => async (dispatch, getState) => {
+const deleteNoteRequest = (id, date) => async (dispatch, getState) => {
   const uid = localStorage.getItem("localId");
   const authTok = localStorage.getItem("idToken");
-  dispatch(deleteNote(note));
+  dispatch(deleteNote(id, date));
 
   await axios.put(
     `https://appnoteredux-55ec0-default-rtdb.firebaseio.com/notes/${uid}.json?auth=${authTok}`,

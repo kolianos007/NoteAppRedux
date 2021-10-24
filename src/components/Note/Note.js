@@ -11,7 +11,7 @@ import { deleteNoteRequest } from "../../redux/actions/notes";
 const Note = ({
   note: { date, title, content, liked, ready },
   id,
-  // deleteNoteRequestConnect,
+  deleteNoteRequestConnect,
   noteStore,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,7 +19,7 @@ const Note = ({
   const onDeleteHandler = () => {
     console.log("id", id);
     console.log("date", date);
-    // deleteNoteRequestConnect();
+    deleteNoteRequestConnect(id, date);
   };
   console.log("ID", id);
   console.log("noteStore", noteStore);
@@ -97,7 +97,7 @@ Note.propTypes = {
   note: PropTypes.objectOf(PropTypes.any).isRequired,
   id: PropTypes.string.isRequired,
   noteStore: PropTypes.objectOf.isRequired,
-  // deleteNoteRequestConnect: PropTypes.func.isRequired,
+  deleteNoteRequestConnect: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ notes }) => {
