@@ -64,13 +64,16 @@ const finishCreateNote = () => async (dispatch, getState) => {
     );
   } else {
     console.log("getBlock", getBlock);
+    const newNote = templateNewNote(
+      getState().create.note.date,
+      getBlockLength,
+      getState().create.note
+    );
+    getBlock.push(newNote);
+    dispatch(notesSuccess(getBlock));
     await axios.put(
       `https://appnoteredux-55ec0-default-rtdb.firebaseio.com/notes/${uid}/${getBlockLength}.json?auth=${authTok}`,
-      templateNewNote(
-        getState().create.note.date,
-        getBlockLength,
-        getState().create.note
-      )
+      newNote
     );
   }
   console.log(changeId);
