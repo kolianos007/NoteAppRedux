@@ -20,6 +20,8 @@ const REZET_NOTE = "REZET_NOTE";
 const EDIT_NOTE = "EDIT_NOTE";
 const SAVE_EDIT_NOTE = "SAVE_EDIT_NOTE";
 const DELETE_NOTE = "DELETE_NOTE";
+const LIKE_NOTE = "LIKE_NOTE";
+const READY_NOTE = "READY_NOTE";
 
 export {
   CHANGE_THEME,
@@ -38,4 +40,6 @@ export {
   EDIT_NOTE,
   SAVE_EDIT_NOTE,
   DELETE_NOTE,
+  LIKE_NOTE,
+  READY_NOTE,
 };

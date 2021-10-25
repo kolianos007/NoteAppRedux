@@ -7,6 +7,8 @@ import {
   EDIT_NOTE,
   SAVE_EDIT_NOTE,
   DELETE_NOTE,
+  LIKE_NOTE,
+  READY_NOTE,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -78,13 +80,50 @@ const notesReducer = (state = initialState, action) => {
                   return elem;
                 })
                 .filter((e) => e);
-              console.log(dateBlock);
               // eslint-disable-next-line no-param-reassign
               el.notesList = dateBlock;
             }
             return el;
           })
           .filter((e) => e),
+      };
+    case LIKE_NOTE:
+      return {
+        ...state,
+        notesList: state.notesList.map((el) => {
+          let likeBlock;
+          if (el.date === action.date) {
+            likeBlock = el.notesList.map((elem) => {
+              if (elem.id === action.id) {
+                // eslint-disable-next-line no-param-reassign
+                elem.liked = !elem.liked;
+              }
+              return elem;
+            });
+            // eslint-disable-next-line no-param-reassign
+            el.notesList = likeBlock;
+          }
+          return el;
+        }),
+      };
+    case READY_NOTE:
+      return {
+        ...state,
+        notesList: state.notesList.map((el) => {
+          let likeBlock;
+          if (el.date === action.date) {
+            likeBlock = el.notesList.map((elem) => {
+              if (elem.id === action.id) {
+                // eslint-disable-next-line no-param-reassign
+                elem.ready = !elem.ready;
+              }
+              return elem;
+            });
+            // eslint-disable-next-line no-param-reassign
+            el.notesList = likeBlock;
+          }
+          return el;
+        }),
       };
     default:
       return state;

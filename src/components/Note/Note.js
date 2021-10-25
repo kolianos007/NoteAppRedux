@@ -6,20 +6,30 @@ import s from "./Note.module.sass";
 import Popup from "../UI/Popup/Popup";
 import CreateNoteForm from "../CreateNoteForm/CreateNoteForm";
 import convertDate from "../../utils/convertDate";
-import { deleteNoteRequest } from "../../redux/actions/notes";
+import {
+  deleteNoteRequest,
+  likeNoteRequest,
+  readyNoteRequest,
+} from "../../redux/actions/notes";
 
 const Note = ({
   note: { date, title, content, liked, ready },
   id,
   deleteNoteRequestConnect,
   noteStore,
+  likeNoteRequestConnect,
+  onReadyRequestConnect,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const onDeleteHandler = () => {
-    console.log("id", id);
-    console.log("date", date);
     deleteNoteRequestConnect(id, date);
+  };
+  const onLikeHandler = () => {
+    likeNoteRequestConnect(id, date);
+  };
+  const onReadyHandler = () => {
+    onReadyRequestConnect(id, date);
   };
   console.log("ID", id);
   console.log("noteStore", noteStore);
@@ -34,6 +44,7 @@ const Note = ({
               ? [s.noteFavourite, s.noteFavouriteLike].join(" ")
               : s.noteFavourite
           }
+          onClick={() => onLikeHandler()}
         >
           <span className={s.ico} />
         </button>
@@ -46,6 +57,7 @@ const Note = ({
               id={id}
               name="complete"
               defaultChecked={!!ready}
+              onClick={() => onReadyHandler()}
             />
             <span>{title}</span>
           </label>
@@ -98,6 +110,8 @@ Note.propTypes = {
   id: PropTypes.string.isRequired,
   noteStore: PropTypes.objectOf.isRequired,
   deleteNoteRequestConnect: PropTypes.func.isRequired,
+  likeNoteRequestConnect: PropTypes.func.isRequired,
+  onReadyRequestConnect: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ notes }) => {
@@ -108,4 +122,6 @@ const mapStateToProps = ({ notes }) => {
 
 export default connect(mapStateToProps, {
   deleteNoteRequestConnect: deleteNoteRequest,
+  likeNoteRequestConnect: likeNoteRequest,
+  onReadyRequestConnect: readyNoteRequest,
 })(Note);

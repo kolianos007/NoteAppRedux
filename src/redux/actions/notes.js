@@ -6,6 +6,8 @@ import {
   EDIT_NOTE,
   SAVE_EDIT_NOTE,
   DELETE_NOTE,
+  LIKE_NOTE,
+  READY_NOTE,
 } from "./actionTypes";
 
 const notesLoaded = () => {
@@ -44,6 +46,22 @@ const saveEditNote = () => {
 const deleteNote = (id, date) => {
   return {
     type: DELETE_NOTE,
+    id,
+    date,
+  };
+};
+
+const likeNote = (id, date) => {
+  return {
+    type: LIKE_NOTE,
+    id,
+    date,
+  };
+};
+
+const readyNote = (id, date) => {
+  return {
+    type: READY_NOTE,
     id,
     date,
   };
@@ -127,6 +145,28 @@ const deleteNoteRequest = (id, date) => async (dispatch, getState) => {
   );
 };
 
+const likeNoteRequest = (id, date) => async (dispatch, getState) => {
+  const uid = localStorage.getItem("localId");
+  const authTok = localStorage.getItem("idToken");
+  dispatch(likeNote(id, date));
+
+  await axios.put(
+    `https://appnoteredux-55ec0-default-rtdb.firebaseio.com/notes/${uid}.json?auth=${authTok}`,
+    getState().notes.notesList
+  );
+};
+
+const readyNoteRequest = (id, date) => async (dispatch, getState) => {
+  const uid = localStorage.getItem("localId");
+  const authTok = localStorage.getItem("idToken");
+  dispatch(readyNote(id, date));
+
+  await axios.put(
+    `https://appnoteredux-55ec0-default-rtdb.firebaseio.com/notes/${uid}.json?auth=${authTok}`,
+    getState().notes.notesList
+  );
+};
+
 export {
   notesLoaded,
   notesSuccess,
@@ -137,4 +177,8 @@ export {
   saveEditNote,
   deleteNote,
   deleteNoteRequest,
+  likeNote,
+  likeNoteRequest,
+  readyNote,
+  readyNoteRequest,
 };
