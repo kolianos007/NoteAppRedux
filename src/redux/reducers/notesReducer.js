@@ -7,7 +7,6 @@ import {
   EDIT_NOTE,
   SAVE_EDIT_NOTE,
   DELETE_NOTE,
-  SET_NUMBER_VISIBLE_BLOCK_NOTES,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -86,11 +85,6 @@ const notesReducer = (state = initialState, action) => {
             return el;
           })
           .filter((e) => e),
-      };
-    case SET_NUMBER_VISIBLE_BLOCK_NOTES:
-      return {
-        ...state,
-        visibleBlock: action.visibleBlock,
       };
     default:
       return state;
