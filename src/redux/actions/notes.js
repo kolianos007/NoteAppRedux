@@ -6,6 +6,7 @@ import {
   EDIT_NOTE,
   SAVE_EDIT_NOTE,
   DELETE_NOTE,
+  VISIBLE_BLOCK_NOTES,
 } from "./actionTypes";
 
 const notesLoaded = () => {
@@ -46,6 +47,13 @@ const deleteNote = (id, date) => {
     type: DELETE_NOTE,
     id,
     date,
+  };
+};
+
+const visibleBlockNotes = (visibleBlock) => {
+  return {
+    type: VISIBLE_BLOCK_NOTES,
+    visibleBlock,
   };
 };
 
@@ -137,4 +145,5 @@ export {
   saveEditNote,
   deleteNote,
   deleteNoteRequest,
+  visibleBlockNotes,
 };
