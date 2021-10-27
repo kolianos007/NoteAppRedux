@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { visibleBlockNotes } from "../../../redux/actions/notes";
 import CustomSelect from "../../CustomSelect";
 
@@ -11,11 +11,11 @@ const FilterQuantity = () => {
   const quantityPerPage = [2, 4, 8, 16];
   const [selected, setSelected] = useState(numberBlock);
   const dispatch = useDispatch();
-  const storeVisBlock = useSelector((state) => state.notes.visibleBlock);
+  // const storeVisBlock = useSelector((state) => state.notes.visibleBlock);
 
   useEffect(() => {
     localStorage.setItem("visibleBlockNotes", selected);
-    dispatch(visibleBlockNotes(storeVisBlock));
+    dispatch(visibleBlockNotes(selected));
     console.log("selectedselectedselected", selected);
   }, [selected]);
 
