@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import convertDate from "../../utils/convertDate";
 import CustomSelect from "../CustomSelect";
 import Search from "../Search";
 
@@ -7,14 +9,17 @@ import FilterGrid from "./FilterGrid/FilterGrid";
 import FilterQuantity from "./FilterQuantity";
 
 const FilterBar = () => {
-  const date = ["14 декабря 2020", "03 января 2021", "31 августа 2020"];
+  const dateFromStore = useSelector(({ notes }) => notes.notesList);
+  const arrDateFromStore = dateFromStore
+    ? dateFromStore.map((el) => convertDate(el.date, "ru"))
+    : [""];
 
   const [selected, setSelected] = useState("Выбрать дату");
   return (
     <div className={s.filterBar}>
       <div>
         <CustomSelect
-          data={date}
+          data={arrDateFromStore}
           selected={selected}
           setSelected={setSelected}
           size="Big"
