@@ -12,7 +12,8 @@ import Button from "../../../components/UI/Button";
 
 const NotesList = ({ notes, loader, getNoteConnect }) => {
   const visibleBlock = useSelector((state) => state.notes.visibleBlock);
-  // const [visB, setVisB] = useState(visibleBlock);
+  // const filterDate = useSelector(({ notes }) => notes.filterDate);
+
   const dispatch = useDispatch();
   useEffect(() => {
     getNoteConnect();
@@ -24,8 +25,6 @@ const NotesList = ({ notes, loader, getNoteConnect }) => {
         visibleBlock + localStorage.getItem("visibleBlockNotes")
       )
     );
-    // setVisB(visB + visibleBlock);
-    // console.log(visB);
   };
 
   return (

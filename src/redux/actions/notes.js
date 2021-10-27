@@ -7,6 +7,7 @@ import {
   SAVE_EDIT_NOTE,
   DELETE_NOTE,
   VISIBLE_BLOCK_NOTES,
+  FILTER_BY_DATE,
 } from "./actionTypes";
 
 const notesLoaded = () => {
@@ -54,6 +55,13 @@ const visibleBlockNotes = (visibleBlock) => {
   return {
     type: VISIBLE_BLOCK_NOTES,
     visibleBlock,
+  };
+};
+
+const filterByDate = (filterDate) => {
+  return {
+    type: FILTER_BY_DATE,
+    filterDate,
   };
 };
 
@@ -146,4 +154,5 @@ export {
   deleteNote,
   deleteNoteRequest,
   visibleBlockNotes,
+  filterByDate,
 };
