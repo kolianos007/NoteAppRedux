@@ -12,22 +12,31 @@ import FilterQuantity from "./FilterQuantity";
 const FilterBar = () => {
   const dispatch = useDispatch();
   const dateFromStore = useSelector(({ notes }) => notes.notesList);
-  const arrDateFromStore = dateFromStore
+  const convertedDateFromStore = dateFromStore
     ? dateFromStore.map((el) => convertDate(el.date, "ru"))
     : [""];
+  const arrDateFromStore = dateFromStore
+    ? dateFromStore.map((el) => el.date)
+    : [""];
 
+  console.log("arrDateFromStore", arrDateFromStore);
+  console.log("convertedDateFromStore", convertedDateFromStore);
   const [selected, setSelected] = useState("Выбрать дату");
+  const [dataAttr, setDataAttr] = useState();
 
   useEffect(() => {
-    dispatch(filterByDate(selected));
-  }, [selected]);
+    dispatch(filterByDate(dataAttr));
+  }, [dataAttr]);
   return (
     <div className={s.filterBar}>
       <div>
         <CustomSelect
-          data={arrDateFromStore}
+          data={convertedDateFromStore}
           selected={selected}
+          fullData={arrDateFromStore}
           setSelected={setSelected}
+          dataAttr={dataAttr}
+          setDataAttr={setDataAttr}
           size="Big"
         />
         <Search />

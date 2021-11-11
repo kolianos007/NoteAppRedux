@@ -13,6 +13,7 @@ import Button from "../../../components/UI/Button";
 const NotesList = ({ notes, loader, getNoteConnect }) => {
   const visibleBlock = useSelector((state) => state.notes.visibleBlock);
   // const filterDate = useSelector(({ notes }) => notes.filterDate);
+  const filteredDate = useSelector((state) => state.notes.filterDate);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -34,23 +35,32 @@ const NotesList = ({ notes, loader, getNoteConnect }) => {
       ) : notes ? (
         <>
           {notes.map(({ date, id, notesList }, i) => {
-            return visibleBlock > i ? (
+            return filteredDate ? (
+              date === filteredDate ? (
+                <BlockDateNotes key={id} notesDate={date} notes={notesList} />
+              ) : null
+            ) : visibleBlock > i ? (
               <BlockDateNotes key={id} notesDate={date} notes={notesList} />
-            ) : (
-              false
-            );
+            ) : null;
+            // return visibleBlock > i ? (
+            //   <BlockDateNotes key={id} notesDate={date} notes={notesList} />
+            // ) : (
+            //   false
+            // );
           })}
-          {visibleBlock >= notes.length ? null : (
-            <Button
-              className="btnWrapper btnWrapper_center"
-              buttonClass="btn btn_sm"
-              text="Показать еще"
-              loader
-              loading={loader}
-              loaderSize="3.125rem"
-              onClick={() => getMoreNotes()}
-            />
-          )}
+          {visibleBlock >= notes.length
+            ? null
+            : !filteredDate && (
+                <Button
+                  className="btnWrapper btnWrapper_center"
+                  buttonClass="btn btn_sm"
+                  text="Показать еще"
+                  loader
+                  loading={loader}
+                  loaderSize="3.125rem"
+                  onClick={() => getMoreNotes()}
+                />
+              )}
         </>
       ) : (
         <EmptyList />
