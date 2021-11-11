@@ -1,27 +1,67 @@
 /* eslint-disable no-nested-ternary */
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import EmptyList from "./EmptyList/EmptyList";
 import Loader from "../../../components/Loader";
 
 import s from "./NotesList.module.sass";
 import BlockDateNotes from "../../../components/BlockDateNotes/BlockDateNotes";
-import { getNote } from "../../../redux/actions/notes";
+import { getNote, visibleBlockNotes } from "../../../redux/actions/notes";
+import Button from "../../../components/UI/Button";
 
 const NotesList = ({ notes, loader, getNoteConnect }) => {
+  const visibleBlock = useSelector((state) => state.notes.visibleBlock);
+  // const filterDate = useSelector(({ notes }) => notes.filterDate);
+  const filteredDate = useSelector((state) => state.notes.filterDate);
+
+  const dispatch = useDispatch();
   useEffect(() => {
     getNoteConnect();
   }, []);
+
+  const getMoreNotes = () => {
+    dispatch(
+      visibleBlockNotes(
+        visibleBlock + localStorage.getItem("visibleBlockNotes")
+      )
+    );
+  };
 
   return (
     <div className={s.listWrapper}>
       {loader ? (
         <Loader width="5rem" height="5rem" />
       ) : notes ? (
-        notes.map(({ date, id, notesList }) => {
-          return <BlockDateNotes key={id} notesDate={date} notes={notesList} />;
-        })
+        <>
+          {notes.map(({ date, id, notesList }, i) => {
+            return filteredDate ? (
+              date === filteredDate ? (
+                <BlockDateNotes key={id} notesDate={date} notes={notesList} />
+              ) : null
+            ) : visibleBlock > i ? (
+              <BlockDateNotes key={id} notesDate={date} notes={notesList} />
+            ) : null;
+            // return visibleBlock > i ? (
+            //   <BlockDateNotes key={id} notesDate={date} notes={notesList} />
+            // ) : (
+            //   false
+            // );
+          })}
+          {visibleBlock >= notes.length
+            ? null
+            : !filteredDate && (
+                <Button
+                  className="btnWrapper btnWrapper_center"
+                  buttonClass="btn btn_sm"
+                  text="Показать еще"
+                  loader
+                  loading={loader}
+                  loaderSize="3.125rem"
+                  onClick={() => getMoreNotes()}
+                />
+              )}
+        </>
       ) : (
         <EmptyList />
       )}

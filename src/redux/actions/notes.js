@@ -8,6 +8,8 @@ import {
   DELETE_NOTE,
   LIKE_NOTE,
   READY_NOTE,
+  VISIBLE_BLOCK_NOTES,
+  FILTER_BY_DATE,
 } from "./actionTypes";
 
 const notesLoaded = () => {
@@ -64,6 +66,20 @@ const readyNote = (id, date) => {
     type: READY_NOTE,
     id,
     date,
+  };
+};
+
+const visibleBlockNotes = (visibleBlock) => {
+  return {
+    type: VISIBLE_BLOCK_NOTES,
+    visibleBlock,
+  };
+};
+
+const filterByDate = (filterDate) => {
+  return {
+    type: FILTER_BY_DATE,
+    filterDate,
   };
 };
 
@@ -181,4 +197,6 @@ export {
   likeNoteRequest,
   readyNote,
   readyNoteRequest,
+  visibleBlockNotes,
+  filterByDate,
 };

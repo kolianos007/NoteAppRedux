@@ -8,7 +8,9 @@ import convertDate from "../../utils/convertDate";
 const BlockDateNotes = ({ notes, notesDate }) => {
   return (
     <div className={s.blockDateNotes}>
-      <div className={s.blockDateNotesTitle}>{convertDate(notesDate)}</div>
+      <div className={s.blockDateNotesTitle}>
+        {convertDate(notesDate, "ru")}
+      </div>
       <div className={s.noteListWrapper}>
         {console.log(notes)}
         {notes.map(({ id, ...note }) => {

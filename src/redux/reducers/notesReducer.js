@@ -9,11 +9,14 @@ import {
   DELETE_NOTE,
   LIKE_NOTE,
   READY_NOTE,
+  VISIBLE_BLOCK_NOTES,
+  FILTER_BY_DATE,
 } from "../actions/actionTypes";
 
 const initialState = {
   notesList: [],
   note: {},
+  filterDate: null,
   visibleBlock: 2,
   loading: false,
   error: false,
@@ -124,6 +127,16 @@ const notesReducer = (state = initialState, action) => {
           }
           return el;
         }),
+      };
+    case VISIBLE_BLOCK_NOTES:
+      return {
+        ...state,
+        visibleBlock: action.visibleBlock,
+      };
+    case FILTER_BY_DATE:
+      return {
+        ...state,
+        filterDate: action.filterDate,
       };
     default:
       return state;

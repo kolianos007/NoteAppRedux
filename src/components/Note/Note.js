@@ -16,9 +16,9 @@ const Note = ({
   note: { date, title, content, liked, ready },
   id,
   deleteNoteRequestConnect,
-  noteStore,
   likeNoteRequestConnect,
   onReadyRequestConnect,
+  // noteStore,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -32,11 +32,11 @@ const Note = ({
     onReadyRequestConnect(id, date);
   };
   console.log("ID", id);
-  console.log("noteStore", noteStore);
+  // console.log("noteStore", noteStore);
   return (
     <div className={s.note}>
       <div className={s.noteTopline}>
-        <span className={s.noteDate}>{convertDate(date)}</span>
+        <span className={s.noteDate}>{convertDate(date, "ru")}</span>
         <button
           type="button"
           className={
@@ -108,15 +108,15 @@ const Note = ({
 Note.propTypes = {
   note: PropTypes.objectOf(PropTypes.any).isRequired,
   id: PropTypes.string.isRequired,
-  noteStore: PropTypes.objectOf.isRequired,
+  // noteStore: PropTypes.objectOf.isRequired,
   deleteNoteRequestConnect: PropTypes.func.isRequired,
   likeNoteRequestConnect: PropTypes.func.isRequired,
   onReadyRequestConnect: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ notes }) => {
+const mapStateToProps = () => {
   return {
-    noteStore: notes.note,
+    // noteStore: notes.note,
   };
 };
 
