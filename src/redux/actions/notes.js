@@ -10,6 +10,7 @@ import {
   READY_NOTE,
   VISIBLE_BLOCK_NOTES,
   FILTER_BY_DATE,
+  SET_NOTE_STYLE,
 } from "./actionTypes";
 
 const notesLoaded = () => {
@@ -80,6 +81,13 @@ const filterByDate = (filterDate) => {
   return {
     type: FILTER_BY_DATE,
     filterDate,
+  };
+};
+
+const setNoteStyleAction = (noteStyle) => {
+  return {
+    type: SET_NOTE_STYLE,
+    noteStyle,
   };
 };
 
@@ -199,4 +207,5 @@ export {
   readyNoteRequest,
   visibleBlockNotes,
   filterByDate,
+  setNoteStyleAction,
 };

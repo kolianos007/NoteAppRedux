@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ClampLines from "react-clamp-lines";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import s from "./Note.module.sass";
 import Popup from "../UI/Popup/Popup";
 import CreateNoteForm from "../CreateNoteForm/CreateNoteForm";
@@ -31,10 +31,17 @@ const Note = ({
   const onReadyHandler = () => {
     onReadyRequestConnect(id, date);
   };
-  console.log("ID", id);
   // console.log("noteStore", noteStore);
+
+  const clsNote = [s.note];
+  const noteStyle = useSelector((state) => state.notes.noteStyle);
+
+  if (noteStyle) {
+    clsNote.push([s[noteStyle]]);
+  }
+
   return (
-    <div className={s.note}>
+    <div className={clsNote.join(" ")}>
       <div className={s.noteTopline}>
         <span className={s.noteDate}>{convertDate(date, "ru")}</span>
         <button
