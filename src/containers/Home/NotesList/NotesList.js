@@ -12,8 +12,8 @@ import Button from "../../../components/UI/Button";
 
 const NotesList = ({ notes, loader, getNoteConnect }) => {
   const visibleBlock = useSelector((state) => state.notes.visibleBlock);
-  // const filterDate = useSelector(({ notes }) => notes.filterDate);
   const filteredDate = useSelector((state) => state.notes.filterDate);
+  const searchedNoteList = useSelector((state) => state.notes.searchedNote);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -28,26 +28,28 @@ const NotesList = ({ notes, loader, getNoteConnect }) => {
     );
   };
 
+  const templateNotesBlock = (dataArr) => {
+    console.log(dataArr);
+    return dataArr.map(({ date, id, notesList }, i) => {
+      return filteredDate ? (
+        date === filteredDate ? (
+          <BlockDateNotes key={id} notesDate={date} notes={notesList} />
+        ) : null
+      ) : visibleBlock > i ? (
+        <BlockDateNotes key={id} notesDate={date} notes={notesList} />
+      ) : null;
+    });
+  };
+
   return (
     <div className={s.listWrapper}>
       {loader ? (
         <Loader width="5rem" height="5rem" />
       ) : notes ? (
         <>
-          {notes.map(({ date, id, notesList }, i) => {
-            return filteredDate ? (
-              date === filteredDate ? (
-                <BlockDateNotes key={id} notesDate={date} notes={notesList} />
-              ) : null
-            ) : visibleBlock > i ? (
-              <BlockDateNotes key={id} notesDate={date} notes={notesList} />
-            ) : null;
-            // return visibleBlock > i ? (
-            //   <BlockDateNotes key={id} notesDate={date} notes={notesList} />
-            // ) : (
-            //   false
-            // );
-          })}
+          {searchedNoteList.length > 0
+            ? templateNotesBlock(searchedNoteList)
+            : templateNotesBlock(notes)}
           {visibleBlock >= notes.length
             ? null
             : !filteredDate && (

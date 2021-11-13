@@ -11,6 +11,7 @@ import {
   VISIBLE_BLOCK_NOTES,
   FILTER_BY_DATE,
   SET_NOTE_STYLE,
+  SET_SEARCH_NOTES_LIST,
 } from "./actionTypes";
 
 const notesLoaded = () => {
@@ -88,6 +89,13 @@ const setNoteStyleAction = (noteStyle) => {
   return {
     type: SET_NOTE_STYLE,
     noteStyle,
+  };
+};
+
+const setSearchNotesList = (searchedNote) => {
+  return {
+    type: SET_SEARCH_NOTES_LIST,
+    searchedNote,
   };
 };
 
@@ -208,4 +216,5 @@ export {
   visibleBlockNotes,
   filterByDate,
   setNoteStyleAction,
+  setSearchNotesList,
 };

@@ -12,6 +12,7 @@ import {
   VISIBLE_BLOCK_NOTES,
   FILTER_BY_DATE,
   SET_NOTE_STYLE,
+  SET_SEARCH_NOTES_LIST,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -22,6 +23,7 @@ const initialState = {
   loading: false,
   error: false,
   noteStyle: null,
+  searchedNote: null,
 };
 
 const notesReducer = (state = initialState, action) => {
@@ -144,6 +146,11 @@ const notesReducer = (state = initialState, action) => {
       return {
         ...state,
         noteStyle: action.noteStyle,
+      };
+    case SET_SEARCH_NOTES_LIST:
+      return {
+        ...state,
+        searchedNote: action.searchedNote,
       };
     default:
       return state;
