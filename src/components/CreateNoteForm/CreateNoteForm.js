@@ -14,6 +14,8 @@ import { editNoteRequest } from "../../redux/actions/notes";
 const CreateNoteForm = ({
   id,
   date,
+  liked,
+  ready,
   content,
   titleNote,
   closeForm,
@@ -50,8 +52,8 @@ const CreateNoteForm = ({
         date: new Date(
           `${value.getFullYear()}, ${value.getMonth() + 1},${value.getDate()}`
         ).getTime(),
-        liked: false,
-        ready: false,
+        liked,
+        ready,
         title: titleVal,
       };
       if (id && date && content && titleNote) {
@@ -138,6 +140,8 @@ CreateNoteForm.propTypes = {
     PropTypes.string,
     PropTypes.instanceOf(Date),
   ]),
+  liked: PropTypes.bool,
+  ready: PropTypes.bool,
   content: PropTypes.string,
   titleNote: PropTypes.string,
   closeForm: PropTypes.func,
@@ -149,6 +153,8 @@ CreateNoteForm.propTypes = {
 CreateNoteForm.defaultProps = {
   id: "",
   date: "",
+  liked: "",
+  ready: "",
   content: "",
   titleNote: "",
   closeForm: () => {},

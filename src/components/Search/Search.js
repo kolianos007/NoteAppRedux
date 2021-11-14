@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  useHistory,
+  useLocation,
+  useParams,
+  useRouteMatch,
+} from "react-router";
 import { setSearchNotesList } from "../../redux/actions/notes";
 
 import s from "./Search.module.sass";
@@ -10,6 +16,15 @@ const Search = () => {
   const dispatch = useDispatch();
   const notesList = useSelector((state) => state.notes.notesList);
 
+  const history = useHistory();
+  const location = useLocation();
+  const params = useParams();
+  const match = useRouteMatch();
+  console.log("history", history);
+  console.log("location", location);
+  console.log("params", params);
+  console.log("match", match);
+
   const filterArr = (arr, filterVal) => {
     const copyArr = JSON.parse(JSON.stringify(arr));
     return (
@@ -18,9 +33,33 @@ const Search = () => {
         .map((notesBlock) => {
           const filteredNote = notesBlock.notesList.filter((note) => {
             console.log(note);
-            return (
-              note.title.includes(filterVal) || note.content.includes(filterVal)
-            );
+            switch (location.pathname) {
+              case "/list":
+                return (
+                  note.title.includes(filterVal) ||
+                  note.content.includes(filterVal)
+                );
+              case "/fulfilled":
+                return (
+                  note.ready &&
+                  (note.title.includes(filterVal) ||
+                    note.content.includes(filterVal))
+                );
+              case "/unfulfilled":
+                return (
+                  !note.ready &&
+                  (note.title.includes(filterVal) ||
+                    note.content.includes(filterVal))
+                );
+              case "/favorites":
+                return (
+                  note.liked &&
+                  (note.title.includes(filterVal) ||
+                    note.content.includes(filterVal))
+                );
+              default:
+                return null;
+            }
           });
           return { ...notesBlock, notesList: filteredNote };
         })

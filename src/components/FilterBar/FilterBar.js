@@ -38,6 +38,7 @@ const FilterBar = () => {
           dataAttr={dataAttr}
           setDataAttr={setDataAttr}
           size="Big"
+          resetFilter
         />
         <Search />
       </div>

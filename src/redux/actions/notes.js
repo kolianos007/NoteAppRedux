@@ -12,6 +12,7 @@ import {
   FILTER_BY_DATE,
   SET_NOTE_STYLE,
   SET_SEARCH_NOTES_LIST,
+  RESET_FILTER_BY_DATE,
 } from "./actionTypes";
 
 const notesLoaded = () => {
@@ -96,6 +97,12 @@ const setSearchNotesList = (searchedNote) => {
   return {
     type: SET_SEARCH_NOTES_LIST,
     searchedNote,
+  };
+};
+
+const resetFilterByDate = () => {
+  return {
+    type: RESET_FILTER_BY_DATE,
   };
 };
 
@@ -217,4 +224,5 @@ export {
   filterByDate,
   setNoteStyleAction,
   setSearchNotesList,
+  resetFilterByDate,
 };

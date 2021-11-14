@@ -13,6 +13,7 @@ import {
   FILTER_BY_DATE,
   SET_NOTE_STYLE,
   SET_SEARCH_NOTES_LIST,
+  RESET_FILTER_BY_DATE,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -151,6 +152,11 @@ const notesReducer = (state = initialState, action) => {
       return {
         ...state,
         searchedNote: action.searchedNote,
+      };
+    case RESET_FILTER_BY_DATE:
+      return {
+        ...state,
+        filterDate: null,
       };
     default:
       return state;
