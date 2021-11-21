@@ -74,11 +74,15 @@ const NotesList = ({ notes, loader, getNoteConnect }) => {
         <Loader width="5rem" height="5rem" />
       ) : notes ? (
         <>
-          {searchedNoteList && searchedNoteList.length > 0
-            ? templateNotesBlock(searchedNoteList)
-            : // : templateNotesBlock(notes)}
-              templateNotesBlock(getLocationNoteList())}
-          {visibleBlock >= getLocationNoteList().length
+          {searchedNoteList && searchedNoteList.length > 0 ? (
+            templateNotesBlock(searchedNoteList)
+          ) : searchedNoteList && searchedNoteList.length === 0 ? (
+            <div className={s.emptyListMess}>Нет записей с таким запросом</div>
+          ) : (
+            templateNotesBlock(getLocationNoteList())
+          )}
+          {visibleBlock >= getLocationNoteList().length ||
+          (searchedNoteList && searchedNoteList.length === 0)
             ? null
             : !filteredDate && (
                 <Button

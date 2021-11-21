@@ -11,8 +11,9 @@ import { setSearchNotesList } from "../../redux/actions/notes";
 import s from "./Search.module.sass";
 
 const Search = () => {
-  const [searchVal, setSearchVal] = useState();
-  const [filteredVal, setFilteredVal] = useState();
+  const [searchVal, setSearchVal] = useState(null);
+  const [filteredVal, setFilteredVal] = useState(null);
+  const [isDirtySearch, setIsDirtySearch] = useState(false);
   const dispatch = useDispatch();
   const notesList = useSelector((state) => state.notes.notesList);
 
@@ -68,17 +69,28 @@ const Search = () => {
   };
 
   useEffect(() => {
-    setFilteredVal(filterArr(notesList, searchVal));
+    console.log("searchVAL", searchVal, filterArr(notesList, searchVal));
+    isDirtySearch &&
+      // searchVal &&
+      setFilteredVal(filterArr(notesList, searchVal));
+    // filteredVal && filteredVal.length < 1
+    //   ? setFilteredVal(filterArr([]))
+    //   : null;
+    // searchVal && filteredVal.length < 1 ? setFilteredVal(filterArr([]))
   }, [searchVal, notesList]);
 
   useEffect(() => {
-    if (filteredVal) {
-      dispatch(setSearchNotesList(filteredVal));
-    }
+    // isDirtySearch &&
+    //   filteredVal &&
+    //   filteredVal.length < 1 &&
+    //   dispatch(setSearchNotesList([]));
+    console.log("filteredVal", filteredVal);
+    dispatch(setSearchNotesList(filteredVal));
   }, [filteredVal]);
 
   const onChangeHandler = (e) => {
     setSearchVal(e.target.value);
+    setIsDirtySearch(true);
   };
 
   return (
