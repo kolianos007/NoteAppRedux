@@ -14,6 +14,7 @@ import { editNoteRequest } from "../../redux/actions/notes";
 const CreateNoteForm = ({
   id,
   date,
+  oldDate,
   liked,
   ready,
   content,
@@ -29,6 +30,7 @@ const CreateNoteForm = ({
   const [value, onChange] = useState(
     typeof date === "number" ? new Date(date) : new Date()
   );
+  console.log(value, "valuevaluevaluevlauevlaehvlaevulaeuvleaul");
   const [titleVal, setTitleVal] = title ? useState(titleNote) : useState("");
   const [contentVal, setContentVal] = content
     ? useState(content)
@@ -45,6 +47,7 @@ const CreateNoteForm = ({
   const clickHandler = () => {
     if (titleVal && contentVal) {
       console.log("VALUEVALUE", value);
+      console.log("VALUEVALUE", date);
       const noteItem = {
         content: contentVal,
         id: id || uuidv4(),
@@ -52,13 +55,16 @@ const CreateNoteForm = ({
         date: new Date(
           `${value.getFullYear()}, ${value.getMonth() + 1},${value.getDate()}`
         ).getTime(),
+        oldDate: oldDate || "",
         liked,
         ready,
         title: titleVal,
       };
       if (id && date && content && titleNote) {
+        console.log("GGGGGGGGGGGGGGGGGGGGGGODDDDDDDDDDDD", noteItem);
         editNoteRequestConnect(noteItem);
       } else {
+        console.log("VBBBBBBBBBBBBBAAAAAAAAAAAAAAAAADDDDDDDDDd");
         createNoteConnect(noteItem);
         finishCreateNoteConnect();
         onChange(new Date());
@@ -140,6 +146,11 @@ CreateNoteForm.propTypes = {
     PropTypes.string,
     PropTypes.instanceOf(Date),
   ]),
+  oldDate: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+    PropTypes.instanceOf(Date),
+  ]),
   liked: PropTypes.bool,
   ready: PropTypes.bool,
   content: PropTypes.string,
@@ -153,6 +164,7 @@ CreateNoteForm.propTypes = {
 CreateNoteForm.defaultProps = {
   id: "",
   date: "",
+  oldDate: "",
   liked: "",
   ready: "",
   content: "",

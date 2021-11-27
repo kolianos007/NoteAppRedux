@@ -103,6 +103,7 @@ const Note = ({
         <CreateNoteForm
           id={id}
           date={date}
+          oldDate={date}
           liked={liked}
           ready={ready}
           titleNote={title}

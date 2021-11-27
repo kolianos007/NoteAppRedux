@@ -50,7 +50,7 @@ const NotesList = ({ notes, loader, getNoteConnect }) => {
   const getMoreNotes = () => {
     dispatch(
       visibleBlockNotes(
-        visibleBlock + localStorage.getItem("visibleBlockNotes")
+        +visibleBlock + +localStorage.getItem("visibleBlockNotes")
       )
     );
   };
@@ -82,7 +82,7 @@ const NotesList = ({ notes, loader, getNoteConnect }) => {
             templateNotesBlock(getLocationNoteList())
           )}
           {visibleBlock >= getLocationNoteList().length ||
-          (searchedNoteList && searchedNoteList.length === 0)
+          (searchedNoteList && searchedNoteList.length < 3)
             ? null
             : !filteredDate && (
                 <Button

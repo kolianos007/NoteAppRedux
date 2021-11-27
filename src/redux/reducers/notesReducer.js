@@ -55,20 +55,62 @@ const notesReducer = (state = initialState, action) => {
     case SAVE_EDIT_NOTE:
       return {
         ...state,
-        notesList: state.notesList.map((el) => {
-          let dateBlock;
-          if (el.date === state.note.date) {
-            dateBlock = el.notesList.map((elem) => {
-              if (elem.id === state.note.id) {
-                return { ...elem, ...state.note };
-              }
-              return elem;
-            });
-            // eslint-disable-next-line no-param-reassign
-            el.notesList = dateBlock;
-          }
-          return el;
-        }),
+        notesList:
+          state.note.date !== state.note.oldDate
+            ? [
+                ...JSON.parse(JSON.stringify(state.notesList))
+                  .map((el) => {
+                    if (el.date === state.note.oldDate) {
+                      const q = el.notesList
+                        .map((elem) => {
+                          // console.log(
+                          //   "IDIDIDIDIDIDIDIDIDIDIDIDIDIDIDIDIDIDIDIDID",
+                          //   elem.id,
+                          //   state.note.id
+                          // );
+                          if (elem.id === state.note.id) {
+                            // arr.push({
+                            //   date: state.note.date,
+                            //   id: state.notesList.length,
+                            //   notesList: [{ ...state.note }],
+                            // });
+                            return null;
+                          }
+                          // console.log("ELE<MELEMLMELEMLEMLEMELMELEMLE", elem);
+                          return elem;
+                        })
+                        .filter((e) => e);
+                      console.log("Qqqqqqqqqqqqqqqqqqqqqqqqqqq", q);
+                      return q.length > 0 ? { ...el, notesList: q } : null;
+                    }
+                    // if (el.notesList) el;
+                    // return null;
+                    return el;
+                  })
+                  .filter((e) => e),
+                {
+                  date: state.note.date,
+                  id: state.notesList.length,
+                  notesList: [{ ...state.note }],
+                },
+              ].sort((a, b) => a.date - b.date)
+            : state.notesList.map((el) => {
+                console.log(
+                  "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                );
+                let dateBlock;
+                if (el.date === state.note.date) {
+                  dateBlock = el.notesList.map((elem) => {
+                    if (elem.id === state.note.id) {
+                      return { ...elem, ...state.note };
+                    }
+                    return elem;
+                  });
+                  // eslint-disable-next-line no-param-reassign
+                  el.notesList = dateBlock;
+                }
+                return el;
+              }),
       };
     case DELETE_NOTE:
       return {
