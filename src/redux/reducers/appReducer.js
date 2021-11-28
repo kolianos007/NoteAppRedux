@@ -9,7 +9,7 @@ const appReducer = (state = initialState, action) => {
     case INITIALIZED_SUCCESS:
       return {
         ...state,
-        initialized: true,
+        initialized: action.initialized,
       };
     default:
       return state;

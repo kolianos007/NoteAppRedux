@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { Switch, Route, Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
+// import { withRouter } from "react-router";
 
-import s from "./App.module.sass";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import Login from "./containers/Auth/Login/Login";
@@ -18,7 +18,16 @@ import FilterBar from "./components/FilterBar/FilterBar";
 import CreateNote from "./containers/Home/CreateNote/CreateNote";
 import { getNote } from "./redux/actions/notes";
 
-function App({ isAuth, autoLoginConnect, getNoteConnect }) {
+import s from "./App.module.sass";
+import { initializedApp } from "./redux/actions/app";
+
+function App({
+  isAuth,
+  isInitialized,
+  autoLoginConnect,
+  getNoteConnect,
+  initializedAppConnect,
+}) {
   // setting theme style
   const localStorageColor = localStorage.getItem("themeStyle");
   const color =
@@ -30,29 +39,34 @@ function App({ isAuth, autoLoginConnect, getNoteConnect }) {
     const { themeStyle } = themeColor;
     return themeStyle;
   });
+  console.log("COLORCOLORCOLORCOLOR", themeColors);
+  // const [initialized, setInitialized] = useState(isInitialized);
+  // console.log(setInitialized);
+
+  useEffect(() => {
+    initializedAppConnect();
+  }, [isInitialized, isAuth]);
 
   useEffect(() => {
     dispatch(changeTheme(color));
-  }, []);
+  }, [themeColors]);
   // finished setting theme style
 
   useEffect(() => {
-    autoLoginConnect();
-    getNoteConnect();
-  }, [isAuth]);
+    if (isInitialized) {
+      console.log(
+        "isInitializedisInitializedisInitializedisInitializedisInitializedisInitializedisInitialized"
+      );
+      autoLoginConnect();
+      getNoteConnect();
+    }
+  }, [isInitialized]);
 
   console.log("auth", isAuth);
 
-  let routes = (
-    <Switch>
-      <Route path="/registration" component={Registration} />
-      <Route exact path={["/", "/login"]} component={Login} />
-      {/* Изза закоментированого радериекта, даже когла Auth путь меняется на /, потому что сначала испольняется этот роутер до момента пока не станет Auth */}
-      {/* <Redirect to="/" /> */}
-    </Switch>
-  );
-
-  if (isAuth) {
+  let routes;
+  console.log(isInitialized, "isInitialized");
+  if (isInitialized) {
     routes = (
       <Switch>
         <PrivateRoute exact path={["/list"]} component={() => <NotesList />} />
@@ -64,7 +78,21 @@ function App({ isAuth, autoLoginConnect, getNoteConnect }) {
         <Redirect to="/list" />
       </Switch>
     );
+  } else {
+    routes = (
+      <Switch>
+        <Route path="/registration" component={Registration} />
+        <Route exact path={["/", "/login"]} component={Login} />
+        {/* Изза закоментированого радериекта, даже когла Auth путь меняется на /, потому что сначала испольняется этот роутер до момента пока не станет Auth */}
+        <Redirect to="/" />
+      </Switch>
+    );
   }
+
+  console.log(
+    "routesroutesroutesroutesroutesroutesroutesroutesroutesroutesroutesroutesroutesroutesroutesroutesroutes",
+    routes
+  );
 
   // const routes = (
   //   <Switch>
@@ -98,22 +126,27 @@ function App({ isAuth, autoLoginConnect, getNoteConnect }) {
 
 App.propTypes = {
   isAuth: PropTypes.bool,
+  isInitialized: PropTypes.bool,
   autoLoginConnect: PropTypes.func,
   getNoteConnect: PropTypes.func.isRequired,
+  initializedAppConnect: PropTypes.func.isRequired,
 };
 
 App.defaultProps = {
   isAuth: false,
+  isInitialized: false,
   autoLoginConnect: () => {},
 };
 
-const mapStateToProps = ({ auth }) => {
+const mapStateToProps = ({ auth, app }) => {
   return {
     isAuth: !!auth.token,
+    isInitialized: app.initialized,
   };
 };
 
 export default connect(mapStateToProps, {
   autoLoginConnect: autoLogin,
   getNoteConnect: getNote,
+  initializedAppConnect: initializedApp,
 })(App);

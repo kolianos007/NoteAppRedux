@@ -30,7 +30,7 @@ const finishCreateNote = () => async (dispatch, getState) => {
   //     `https://appnoteredux-55ec0-default-rtdb.firebaseio.com/notes/${uid}.json?auth=${authTok}`
   //   )
   //   .then((res) => res.data);
-  const getBlock = JSON.parse(JSON.stringify(getState().notes.notesList));
+  let getBlock = JSON.parse(JSON.stringify(getState().notes.notesList));
   console.log(getBlock);
   console.log(getState());
   // const sortGetBlock = getBlock.sort((a, b) => {
@@ -60,6 +60,9 @@ const finishCreateNote = () => async (dispatch, getState) => {
       getBlockLength,
       getState().create.note
     );
+    if (getBlock === null) {
+      getBlock = [];
+    }
     getBlock.push(newNote);
     dispatch(notesSuccess(getBlock));
     await axios.put(

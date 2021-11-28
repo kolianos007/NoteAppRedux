@@ -1,21 +1,34 @@
 import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 // import axios from "axios";
-import Switch from "../Switch";
+import Switcher from "../Switch";
 import { postName, setName } from "../../redux/actions/userName";
 
 import greetIco from "../../images/greet.svg";
 import s from "./Header.module.sass";
+import { initializedApp } from "../../redux/actions/app";
 
 const Header = ({ isAuth, displayName, saveName, setNameProp }) => {
   let header = (
     <header className={s.header}>
       <div className={s.header_logo}>Noteapp</div>
-      <Switch />
+      <Switcher />
     </header>
   );
+  const location = useLocation();
+  const isInitialized = useSelector(({ app }) => {
+    const { initialized } = app;
+    return initialized;
+  });
+
+  useEffect(() => {
+    if (location.pathname === "/logout") {
+      initializedApp();
+    }
+  }, []);
+
   // eslint-disable-next-line no-shadow
   const [name, setName] = useState("");
 
@@ -35,8 +48,8 @@ const Header = ({ isAuth, displayName, saveName, setNameProp }) => {
       : false;
   }, [localStorage.getItem("nameNoteApp")]);
 
-  console.log("displayName", displayName.name);
-  if (isAuth) {
+  console.log("displayName", displayName.name, isAuth, isInitialized);
+  if (isInitialized) {
     header = (
       <header className={`${s.header} ${s.headerAuth}`}>
         <div className={s.header_logo}>Noteapp</div>
@@ -70,7 +83,7 @@ const Header = ({ isAuth, displayName, saveName, setNameProp }) => {
           )}
         </div>
         <div className={s.header_wrapper}>
-          <Switch />
+          <Switcher />
           <Link to="/logout" className={s.logout}>
             Выйти
           </Link>

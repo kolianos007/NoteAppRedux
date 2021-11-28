@@ -1,7 +1,7 @@
 import { CHANGE_THEME } from "../actions/actionTypes";
 
 const initialState = {
-  themeStyle: "",
+  themeStyle: "light",
   themeLight: "light",
   themeDark: "dark",
 };

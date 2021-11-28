@@ -154,7 +154,7 @@ const getNote = () => async (dispatch) => {
       .then((res) => dispatch(notesSuccess(res.data)))
       .catch((err) => dispatch(notesError(err)));
   } else {
-    dispatch(notesSuccess(list));
+    dispatch(notesSuccess(null));
   }
 
   return notesList;
