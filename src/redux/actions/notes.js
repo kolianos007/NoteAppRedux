@@ -141,7 +141,7 @@ const getNote = () => async (dispatch) => {
     })
     .catch((err) => {
       console.log(err);
-      return false;
+      return null;
     });
 
   let notesList;

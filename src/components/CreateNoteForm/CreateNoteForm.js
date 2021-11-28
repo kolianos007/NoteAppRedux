@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
@@ -35,14 +35,18 @@ const CreateNoteForm = ({
   const [contentVal, setContentVal] = content
     ? useState(content)
     : useState("");
+  const [isCreated, setIsCreated] = useState(false);
 
-  // const options = {
-  //   year: "numeric",
-  //   month: "long",
-  //   day: "numeric",
-  // };
-  // const localDate = value.toLocaleString("ru", options).replace(" г.", "");
-  // console.log("localDate", localDate);
+  useEffect(() => {
+    const timer =
+      isCreated &&
+      setTimeout(() => {
+        setIsCreated(false);
+      }, 3000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [isCreated]);
 
   const clickHandler = () => {
     if (titleVal && contentVal) {
@@ -65,6 +69,7 @@ const CreateNoteForm = ({
         editNoteRequestConnect(noteItem);
       } else {
         console.log("VBBBBBBBBBBBBBAAAAAAAAAAAAAAAAADDDDDDDDDd");
+        setIsCreated(true);
         createNoteConnect(noteItem);
         finishCreateNoteConnect();
         onChange(new Date());
@@ -73,11 +78,6 @@ const CreateNoteForm = ({
       }
       closeForm(false);
     }
-
-    // // сделать проверку на успешное создание заметки
-    // onChange(new Date());
-    // setTitleVal("");
-    // setContentVal("");
   };
 
   return (
@@ -123,16 +123,20 @@ const CreateNoteForm = ({
             required
           />
         </div>
-        <div className={s.formFieldWrapper}>
+        <div
+          className={[s.formFieldWrapper, s.formFieldWrapperStatusSuccess].join(
+            " "
+          )}
+        >
           <Button
             className="btnWrapper"
             buttonClass="btn btn_sm"
             text={content ? "Редактировать заметку" : "Создать заметку"}
             onClick={clickHandler}
           />
-          {/* {isSuccess ? (
+          {isCreated ? (
             <div className={s.successCreate}>Заметка успешно создана</div>
-          ) : null} */}
+          ) : null}
         </div>
       </form>
     </div>
@@ -165,8 +169,8 @@ CreateNoteForm.defaultProps = {
   id: "",
   date: "",
   oldDate: "",
-  liked: "",
-  ready: "",
+  liked: false,
+  ready: false,
   content: "",
   titleNote: "",
   closeForm: () => {},

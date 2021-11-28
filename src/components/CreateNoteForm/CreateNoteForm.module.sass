@@ -7,6 +7,11 @@
             margin-bottom: 10px
         &:last-child
             margin-bottom: 20px
+        &Status
+            &Success
+                display: flex
+                justify-content: space-between
+                align-items: center
     &Input
         background: var(--theme-input-bg)
         border: 1px solid var(--theme-input-border-color)
@@ -23,9 +28,15 @@
             padding: 10px 30px
 
 .successCreate
-    color: var(--success-color)
+    color: var(--btn-color)
     font-size: 1rem
     line-height: 1.25rem
     margin-left: 1.875rem
-    position: absolute
-    left: 0
+    background: var(--secondary-text-color)
+    text-transform: uppercase
+    height: 50px
+    display: flex
+    justify-content: center
+    align-items: center
+    border-radius: 5px
+    padding: 0 20px

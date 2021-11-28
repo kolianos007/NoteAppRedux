@@ -40,15 +40,6 @@ const finishCreateNote = () => async (dispatch, getState) => {
   const getBlockLength = getBlock ? getBlock.length : 0;
   const findDateNote = getBlock
     ? getBlock.find((el, i) => {
-        // console.log(el.date);
-        // console.log(getState().create.note.date);
-        // console.log(
-        //   "DATEDATEDATE",
-        //   el.date.length,
-        //   getState().create.note.date.length,
-        //   el.date === getState().create.note.date
-        // );
-
         changeId = i;
         return el.date === getState().create.note.date;
       })
