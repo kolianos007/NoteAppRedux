@@ -96,7 +96,6 @@ const auth = (email, password, isLogin) => {
     if (response.error) {
       return response;
     }
-    console.log("response", response);
     const {
       data: { idToken, localId, expiresIn, displayName },
     } = response;
@@ -113,7 +112,6 @@ const auth = (email, password, isLogin) => {
     dispatch(authSuccess(idToken));
     dispatch(autoLogout(expiresIn));
 
-    console.log("response", response);
     return response;
   };
 };

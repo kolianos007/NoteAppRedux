@@ -19,8 +19,6 @@ const FilterBar = () => {
     ? dateFromStore.map((el) => el.date)
     : [""];
 
-  console.log("arrDateFromStore", arrDateFromStore);
-  console.log("convertedDateFromStore", convertedDateFromStore);
   const [selected, setSelected] = useState("Выбрать дату");
   const [dataAttr, setDataAttr] = useState();
 

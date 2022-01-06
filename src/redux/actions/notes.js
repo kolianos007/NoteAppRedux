@@ -22,7 +22,6 @@ const notesLoaded = () => {
 };
 
 const notesSuccess = (notesList) => {
-  console.log("NOTESLIST", notesList);
   return {
     type: GET_NOTES_SUCCESS,
     notesList,
@@ -116,18 +115,15 @@ const getNote = () => async (dispatch) => {
     )
     // .then((res) => dispatch(notesSuccess(res.data)))
     .then((res) => {
-      console.log(res);
       if (res.data === null) {
         return null;
       }
-      console.log("results", res.data);
       const filterNote =
         res.data.length > 1
           ? res.data
               .filter((e) => e)
               .sort((a, b) => a.date - b.date)
               .map((el, i, arr) => {
-                console.log(arr);
                 // eslint-disable-next-line no-param-reassign
                 arr[i].id = i;
                 // eslint-disable-next-line no-param-reassign
@@ -135,7 +131,6 @@ const getNote = () => async (dispatch) => {
                 return el;
               })
           : res.data;
-      console.log(filterNote);
       // dispatch(notesSuccess(filterNote));
       return filterNote;
     })
@@ -165,7 +160,6 @@ const editNoteRequest = (note) => async (dispatch, getState) => {
   const authTok = localStorage.getItem("idToken");
   dispatch(editNote(note));
   dispatch(saveEditNote());
-  console.log("Qqqqq", getState().notes.notesList);
 
   await axios.put(
     `https://appnoteredux-55ec0-default-rtdb.firebaseio.com/notes/${uid}.json?auth=${authTok}`,

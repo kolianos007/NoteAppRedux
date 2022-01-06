@@ -63,24 +63,12 @@ const notesReducer = (state = initialState, action) => {
                     if (el.date === state.note.oldDate) {
                       const q = el.notesList
                         .map((elem) => {
-                          // console.log(
-                          //   "IDIDIDIDIDIDIDIDIDIDIDIDIDIDIDIDIDIDIDIDID",
-                          //   elem.id,
-                          //   state.note.id
-                          // );
                           if (elem.id === state.note.id) {
-                            // arr.push({
-                            //   date: state.note.date,
-                            //   id: state.notesList.length,
-                            //   notesList: [{ ...state.note }],
-                            // });
                             return null;
                           }
-                          // console.log("ELE<MELEMLMELEMLEMLEMELMELEMLE", elem);
                           return elem;
                         })
                         .filter((e) => e);
-                      console.log("Qqqqqqqqqqqqqqqqqqqqqqqqqqq", q);
                       return q.length > 0 ? { ...el, notesList: q } : null;
                     }
                     // if (el.notesList) el;
@@ -95,9 +83,6 @@ const notesReducer = (state = initialState, action) => {
                 },
               ].sort((a, b) => a.date - b.date)
             : state.notesList.map((el) => {
-                console.log(
-                  "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                );
                 let dateBlock;
                 if (el.date === state.note.date) {
                   dateBlock = el.notesList.map((elem) => {

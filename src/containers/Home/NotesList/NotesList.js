@@ -56,7 +56,6 @@ const NotesList = ({ notes, loader, getNoteConnect }) => {
   };
 
   const templateNotesBlock = (dataArr) => {
-    console.log(dataArr);
     return dataArr.map(({ date, id, notesList }, i) => {
       return filteredDate ? (
         date === filteredDate ? (

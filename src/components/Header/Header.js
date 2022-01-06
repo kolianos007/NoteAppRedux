@@ -10,7 +10,7 @@ import greetIco from "../../images/greet.svg";
 import s from "./Header.module.sass";
 import { initializedApp } from "../../redux/actions/app";
 
-const Header = ({ isAuth, displayName, saveName, setNameProp }) => {
+const Header = ({ displayName, saveName, setNameProp }) => {
   let header = (
     <header className={s.header}>
       <div className={s.header_logo}>Noteapp</div>
@@ -42,13 +42,11 @@ const Header = ({ isAuth, displayName, saveName, setNameProp }) => {
   };
 
   useEffect(() => {
-    console.log("localStor", localStorage.getItem("nameNoteApp"));
     localStorage.getItem("nameNoteApp")
       ? setNameProp(localStorage.getItem("nameNoteApp"))
       : false;
   }, [localStorage.getItem("nameNoteApp")]);
 
-  console.log("displayName", displayName.name, isAuth, isInitialized);
   if (isInitialized) {
     header = (
       <header className={`${s.header} ${s.headerAuth}`}>
@@ -95,14 +93,12 @@ const Header = ({ isAuth, displayName, saveName, setNameProp }) => {
 };
 
 Header.propTypes = {
-  isAuth: PropTypes.bool,
   displayName: PropTypes.objectOf(PropTypes.string),
   saveName: PropTypes.func,
   setNameProp: PropTypes.func,
 };
 
 Header.defaultProps = {
-  isAuth: false,
   displayName: {},
   saveName: () => {},
   setNameProp: () => {},

@@ -31,7 +31,6 @@ const Note = ({
   const onReadyHandler = () => {
     onReadyRequestConnect(id, date);
   };
-  // console.log("noteStore", noteStore);
 
   const clsNote = [s.note];
   const noteStyle = useSelector((state) => state.notes.noteStyle);

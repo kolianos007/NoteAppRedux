@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  useHistory,
-  useLocation,
-  useParams,
-  useRouteMatch,
-} from "react-router";
+import { useLocation } from "react-router";
 import { setSearchNotesList } from "../../redux/actions/notes";
 
 import s from "./Search.module.sass";
@@ -17,14 +12,7 @@ const Search = () => {
   const dispatch = useDispatch();
   const notesList = useSelector((state) => state.notes.notesList);
 
-  const history = useHistory();
   const location = useLocation();
-  const params = useParams();
-  const match = useRouteMatch();
-  console.log("history", history);
-  console.log("location", location);
-  console.log("params", params);
-  console.log("match", match);
 
   const filterArr = (arr, filterVal) => {
     const copyArr = JSON.parse(JSON.stringify(arr));
@@ -33,7 +21,6 @@ const Search = () => {
       copyArr
         .map((notesBlock) => {
           const filteredNote = notesBlock.notesList.filter((note) => {
-            console.log(note);
             switch (location.pathname) {
               case "/list":
                 return (
@@ -69,7 +56,6 @@ const Search = () => {
   };
 
   useEffect(() => {
-    console.log("searchVAL", searchVal, filterArr(notesList, searchVal));
     isDirtySearch &&
       // searchVal &&
       setFilteredVal(filterArr(notesList, searchVal));
@@ -84,7 +70,6 @@ const Search = () => {
     //   filteredVal &&
     //   filteredVal.length < 1 &&
     //   dispatch(setSearchNotesList([]));
-    console.log("filteredVal", filteredVal);
     dispatch(setSearchNotesList(filteredVal));
   }, [filteredVal]);
 

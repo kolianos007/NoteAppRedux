@@ -24,13 +24,10 @@ const CreateNoteForm = ({
   finishCreateNoteConnect,
   editNoteRequestConnect,
 }) => {
-  console.log("DATE", date);
-  console.log("ID", id);
   const title = titleNote ? "Редактировать заметку" : "Создать новую заметку";
   const [value, onChange] = useState(
     typeof date === "number" ? new Date(date) : new Date()
   );
-  console.log(value, "valuevaluevaluevlauevlaehvlaevulaeuvleaul");
   const [titleVal, setTitleVal] = title ? useState(titleNote) : useState("");
   const [contentVal, setContentVal] = content
     ? useState(content)
@@ -50,8 +47,6 @@ const CreateNoteForm = ({
 
   const clickHandler = () => {
     if (titleVal && contentVal) {
-      console.log("VALUEVALUE", value);
-      console.log("VALUEVALUE", date);
       const noteItem = {
         content: contentVal,
         id: id || uuidv4(),
@@ -65,10 +60,8 @@ const CreateNoteForm = ({
         title: titleVal,
       };
       if (id && date && content && titleNote) {
-        console.log("GGGGGGGGGGGGGGGGGGGGGGODDDDDDDDDDDD", noteItem);
         editNoteRequestConnect(noteItem);
       } else {
-        console.log("VBBBBBBBBBBBBBAAAAAAAAAAAAAAAAADDDDDDDDDd");
         setIsCreated(true);
         createNoteConnect(noteItem);
         finishCreateNoteConnect();

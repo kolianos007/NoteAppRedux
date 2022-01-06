@@ -31,8 +31,6 @@ const finishCreateNote = () => async (dispatch, getState) => {
   //   )
   //   .then((res) => res.data);
   let getBlock = JSON.parse(JSON.stringify(getState().notes.notesList));
-  console.log(getBlock);
-  console.log(getState());
   // const sortGetBlock = getBlock.sort((a, b) => {
 
   // })
@@ -48,13 +46,11 @@ const finishCreateNote = () => async (dispatch, getState) => {
     findDateNote.notesList.push(getState().create.note);
     getBlock[changeId] = findDateNote;
     dispatch(notesSuccess(getBlock));
-    console.log(findDateNote);
     await axios.put(
       `https://appnoteredux-55ec0-default-rtdb.firebaseio.com/notes/${uid}/${changeId}.json?auth=${authTok}`,
       findDateNote
     );
   } else {
-    console.log("getBlock", getBlock);
     const newNote = templateNewNote(
       getState().create.note.date,
       getBlockLength,
@@ -70,8 +66,6 @@ const finishCreateNote = () => async (dispatch, getState) => {
       newNote
     );
   }
-  console.log(changeId);
-  console.log(findDateNote);
 
   // await axios.put(
   //   `https://appnoteredux-55ec0-default-rtdb.firebaseio.com/notes/${uid}/${changeId}.json?auth=${authTok}`,

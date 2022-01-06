@@ -12,7 +12,6 @@ const BlockDateNotes = ({ notes, notesDate }) => {
         {convertDate(notesDate, "ru")}
       </div>
       <div className={s.noteListWrapper}>
-        {console.log(notes)}
         {notes.map(({ id, ...note }) => {
           return <Note key={id} note={note} id={id} />;
         })}

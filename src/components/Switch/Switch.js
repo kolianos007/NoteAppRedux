@@ -7,10 +7,6 @@ import s from "./Switch.module.sass";
 const Switch = ({ isAuth }) => {
   const dispatch = useDispatch();
   const localStorageColor = localStorage.getItem("themeStyle");
-  console.log(
-    typeof localStorageColor,
-    "localStorageColorlocalStorageColorlocalStorageColorlocalStorageColor"
-  );
 
   if (localStorageColor !== "undefined") {
     dispatch(changeTheme(localStorageColor));

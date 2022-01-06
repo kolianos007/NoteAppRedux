@@ -39,9 +39,6 @@ function App({
     const { themeStyle } = themeColor;
     return themeStyle;
   });
-  console.log("COLORCOLORCOLORCOLOR", themeColors);
-  // const [initialized, setInitialized] = useState(isInitialized);
-  // console.log(setInitialized);
 
   useEffect(() => {
     initializedAppConnect();
@@ -54,18 +51,12 @@ function App({
 
   useEffect(() => {
     if (isInitialized) {
-      console.log(
-        "isInitializedisInitializedisInitializedisInitializedisInitializedisInitializedisInitialized"
-      );
       autoLoginConnect();
       getNoteConnect();
     }
   }, [isInitialized]);
 
-  console.log("auth", isAuth);
-
   let routes;
-  console.log(isInitialized, "isInitialized");
   if (isInitialized) {
     routes = (
       <Switch>
@@ -88,11 +79,6 @@ function App({
       </Switch>
     );
   }
-
-  console.log(
-    "routesroutesroutesroutesroutesroutesroutesroutesroutesroutesroutesroutesroutesroutesroutesroutesroutes",
-    routes
-  );
 
   // const routes = (
   //   <Switch>

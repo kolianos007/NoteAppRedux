@@ -9,7 +9,6 @@ import { auth } from "../../../redux/actions/auth";
 import s from "./Login.module.sass";
 
 const Login = ({ loading, err, authConnect }) => {
-  // console.log(loading, "loading-------------------");
   const email = useInput("", { isEmpty: true, isEmail: true });
   const password = useInput("", { isEmpty: true, isPass: true });
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -30,7 +29,6 @@ const Login = ({ loading, err, authConnect }) => {
   const visiblePass = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
-  console.log("errrrrrrrrrrrrrrrr", err);
   return (
     <div className={s.auth}>
       <div className="container">

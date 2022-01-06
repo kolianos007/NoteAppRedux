@@ -16,7 +16,6 @@ const FilterQuantity = () => {
   useEffect(() => {
     localStorage.setItem("visibleBlockNotes", selected);
     dispatch(visibleBlockNotes(selected));
-    console.log("selectedselectedselected", selected);
   }, [selected]);
 
   return (
